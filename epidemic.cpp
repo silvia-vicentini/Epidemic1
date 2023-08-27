@@ -17,8 +17,7 @@ Epidemic::Epidemic(double const &beta, double const &gamma)
 }
 
 int Epidemic::solve_S(Population &population_state,  // serve?
-                      double const &beta, double const &gamma,
-                      int const time) const {
+                      double const &beta, double const &gamma) const {
   int const N = population_state.S + population_state.I + population_state.R;
   population_state.S =
       population_state.S - beta * population_state.S * population_state.I / N;
@@ -27,8 +26,7 @@ int Epidemic::solve_S(Population &population_state,  // serve?
 }
 
 int Epidemic::solve_I(Population &population_state,  // serve?
-                      double const &beta, double const &gamma,
-                      int const time) const {
+                      double const &beta, double const &gamma) const {
   int const N = population_state.S + population_state.I + population_state.R;
   population_state.I = population_state.I +
                        beta * population_state.S * population_state.I / N -
@@ -38,8 +36,7 @@ int Epidemic::solve_I(Population &population_state,  // serve?
 }
 
 int Epidemic::solve_R(Population &population_state,  // serve?
-                      double const &beta, double const &gamma,
-                      int const time) const {
+                      double const &beta, double const &gamma) const {
   int const N = population_state.S + population_state.I + population_state.R;
 
   population_state.R = population_state.R + gamma * population_state.I;
@@ -61,9 +58,9 @@ void Epidemic::evolve(Population &population_state, double const &beta,
 
   int const N = population_state.S + population_state.I + population_state.R;
   for (int i{0}; i <= time; ++i) {
-    population_state.S = solve_S(population_state, beta, gamma, time);
-    population_state.I = solve_I(population_state, beta, gamma, time);
-    population_state.R = solve_R(population_state, beta, gamma, time);
+    population_state.S = solve_S(population_state, beta, gamma);
+    population_state.I = solve_I(population_state, beta, gamma);
+    population_state.R = solve_R(population_state, beta, gamma);
     population_state_.push_back(population_state);
   }
 }
