@@ -17,12 +17,9 @@ class Epidemic {
   double gamma_;
   std::vector<Population> population_state_;
 
-  int solve_S(Population &, double const &, double const &,
-                     int const) const;
-  int solve_I(Population &, double const &, double const &,
-                     int const) const;
-  int solve_R(Population &, double const &, double const &,
-                     int const) const;
+  int solve_S(Population &, double const &, double const &) const;
+  int solve_I(Population &, double const &, double const &) const;
+  int solve_R(Population &, double const &, double const &) const;
 
  public:
   Epidemic(double const &,
