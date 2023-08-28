@@ -20,7 +20,7 @@ Epidemic::Epidemic(double const beta, double const gamma)
   }
 }
 
-Population Epidemic::solve(Population const &prev_state, int const N) const {
+Population Epidemic::solve(Population const &prev_state, int const N) const { //bisogna verificare che le approssimazioni a numeri interi vengano svolte nella maniera corretta
   double const beta{Epidemic::beta_};
   double const gamma{Epidemic::gamma_};
   int const S_i = prev_state.S - beta * prev_state.S * prev_state.I / N;
