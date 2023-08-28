@@ -17,21 +17,19 @@ class Epidemic {
   double gamma_;
   std::vector<Population> population_state_;
 
-  int solve_S(Population &, double const &, double const &) const;
-  int solve_I(Population &, double const &, double const &) const;
-  int solve_R(Population &, double const &, double const &) const;
+  Population solve(Population const &, double const, double const) const;
 
  public:
-  Epidemic(double const &,
-           double const &);  // è giusto const qui? devo mettere anche la
-                             // popolazione iniziale tra le variabili?
+  Epidemic(double const,
+           double const);  // è giusto const qui? devo mettere anche la
+                           // popolazione iniziale tra le variabili?
 
   std::size_t size() const;  // non so se serva tato che deve essere uguale a t
 
   void push_back(Population &);  // per inserire ogni step
                                  // dell'evoluzione della pandemia
 
-  void evolve(Population &, double const &, double const &,
+  void evolve(Population &, double const, double const,
               int const);  // questa funzione consente di calcolare l'evoluzione
                            // della popolazione ad un istante di tempo t
 
