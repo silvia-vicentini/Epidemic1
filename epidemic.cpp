@@ -20,12 +20,8 @@ Epidemic::Epidemic(double const beta, double const gamma)
   }
 }
 
-Population Epidemic::solve(Population const &prev_state) const {
-  int const N =
-      prev_state.S + prev_state.I +
-      prev_state
-          .R;  // forse è più efficiente se non deve ricalcolare N ad ogni loop?
-  double const beta{Epidemic::beta_}; //è giusto scritto così?
+Population Epidemic::solve(Population const &prev_state, int const N) const {
+  double const beta{Epidemic::beta_};
   double const gamma{Epidemic::gamma_};
   int const S_i = prev_state.S - beta * prev_state.S * prev_state.I / N;
   int const I_i = prev_state.I + beta * prev_state.S * prev_state.I / N -
@@ -38,10 +34,12 @@ Population Epidemic::solve(Population const &prev_state) const {
 void Epidemic::evolve(Population &initial_population, int const time) {
   population_state_.push_back(initial_population);
 
+  int const N =
+      initial_population.S + initial_population.I + initial_population.R;
   auto population_it = Epidemic::population_state_.begin();
 
   for (int i{1}; i <= time; ++i) {
-    *population_it = solve(*population_it);
+    *population_it = solve(*population_it, N);
     population_state_.push_back(*population_it);
   }
 }
