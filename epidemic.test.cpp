@@ -28,7 +28,7 @@ TEST_CASE("Testing the Epidemic development") {
     CHECK(result(state[4], {295, 1, 4}));
   }
   
-  SUBCASE("Normal use, N=300") {
+  SUBCASE("Normal use, N=1000") {
     Epidemic epidemic{0.8, 0.2};
     Population initial_population{990, 10, 0};
     epidemic.evolve(initial_population, 4);
