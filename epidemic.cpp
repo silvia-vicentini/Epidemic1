@@ -35,14 +35,6 @@ Population Epidemic::solve(Population const &prev_state) const {
   return Population{S_i, I_i, R_i};
 }
 
-std::size_t Epidemic::size() const {
-  return Epidemic::population_state_.size();
-}  // serve?
-
-void Epidemic::push_back(Population &population_i) {
-  Epidemic::population_state_.push_back(population_i);
-}
-
 void Epidemic::evolve(Population &initial_population, int const time) {
   population_state_.push_back(initial_population);
 
