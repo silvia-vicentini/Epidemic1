@@ -25,7 +25,7 @@ TEST_CASE("Testing the Epidemic development") {
     CHECK(result(state[1], {298, 1, 1}));
     CHECK(result(state[2], {297, 1, 2}));
     CHECK(result(state[3], {296, 1, 3}));
-    CHECK(result(state[4], {295, 1, 4}));˙
+    CHECK(result(state[4], {295, 1, 4}));
   }
   
   SUBCASE("Normal use, N=300") {
