@@ -4,7 +4,7 @@
 #include <stdexcept>  //per fare i throw
 #include <vector>
 
-Epidemic::Epidemic(double const &beta, double const &gamma)
+Epidemic::Epidemic(double const beta, double const gamma)
     : beta_{beta}, gamma_{gamma} {
   if (beta_ < 0. || beta_ > 1.) {
     throw std::runtime_error{
@@ -14,54 +14,43 @@ Epidemic::Epidemic(double const &beta, double const &gamma)
     throw std::runtime_error{
         "Epidemic parameter gamma must be such that 0 <= gamma <= 1"};
   }
+  if (beta_ <= gamma_) {
+    throw std::runtime_error{
+        "Epidemic parameter beta must be greather than gamma"};
+  }
 }
 
-int Epidemic::solve_S(Population &population_state,  // serve?
-                      double const &beta, double const &gamma) const {
-  int const N = population_state.S + population_state.I + population_state.R;
-  population_state.S =
-      population_state.S - beta * population_state.S * population_state.I / N;
+Population Epidemic::solve(Population const &prev_state, double const beta,
+                           double const gamma) const {
+  int const N =
+      prev_state.S + prev_state.I +
+      prev_state
+          .R;  // forse è più efficiente se non deve ricalcolare N ad ogni loop?
+  int const S_i = prev_state.S - beta * prev_state.S * prev_state.I / N;
+  int const I_i = prev_state.I + beta * prev_state.S * prev_state.I / N -
+                  gamma * prev_state.I;
+  int const R_i = prev_state.R + gamma * prev_state.I;
 
-  return population_state.S;
-}
-
-int Epidemic::solve_I(Population &population_state,  // serve?
-                      double const &beta, double const &gamma) const {
-  int const N = population_state.S + population_state.I + population_state.R;
-  population_state.I = population_state.I +
-                       beta * population_state.S * population_state.I / N -
-                       gamma * population_state.I;
-
-  return population_state.I;
-}
-
-int Epidemic::solve_R(Population &population_state,  // serve?
-                      double const &beta, double const &gamma) const {
-  int const N = population_state.S + population_state.I + population_state.R;
-
-  population_state.R = population_state.R + gamma * population_state.I;
-
-  return population_state.R;
+  return Population{S_i, I_i, R_i};
 }
 
 std::size_t Epidemic::size() const {
   return Epidemic::population_state_.size();
 }  // serve?
 
-void Epidemic::push_back(Population &population_state) {
-  Epidemic::population_state_.push_back(population_state);
+void Epidemic::push_back(Population &population_i) {
+  Epidemic::population_state_.push_back(population_i);
 }
 
-void Epidemic::evolve(Population &population_state, double const &beta,
-                      double const &gamma, int const time) {
-  population_state_.push_back(population_state);
+void Epidemic::evolve(Population &initial_population, double const beta,
+                      double const gamma, int const time) {
+  population_state_.push_back(initial_population);
 
-  int const N = population_state.S + population_state.I + population_state.R;
-  for (int i{0}; i <= time; ++i) {
-    population_state.S = solve_S(population_state, beta, gamma);
-    population_state.I = solve_I(population_state, beta, gamma);
-    population_state.R = solve_R(population_state, beta, gamma);
-    population_state_.push_back(population_state);
+  auto population_it = Epidemic::population_state_.begin();
+
+  for (int i{1}; i <= time; ++i) {
+    *population_it = solve(*population_it, beta, gamma);
+    population_state_.push_back(*population_it);
   }
 }
 
