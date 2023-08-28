@@ -7,7 +7,7 @@
 
 #include "epidemic.hpp"
 
-struct Reading {  // va messo qui o nell'header file?
+struct Reading {  // va messo qui o nell'header file
   double beta{}, gamma{};
   int S{}, I{}, R{};
   int time{};
@@ -22,8 +22,10 @@ int main() {
             << "- quit [q]\n";
   char cmd;
   while (std::cin >> cmd) {
-    // prende da command line con popolazione iniziale S = 997, I = 3, R = 0, Parametri della pandemia beta = 0.8, gamma = 0.4, per un arco di tempo time = 7 giorni.
 
+    // prende da command line con popolazione iniziale S = 997, I = 3, R = 0,
+    // Parametri della pandemia beta = 0.8, gamma = 0.4, per un arco di tempo
+    // time = 7 giorni.
     if (cmd == 'l') {
       Epidemic epidemic{0.8, 0.4};
       Population initial_population{997, 3, 0};
@@ -38,7 +40,7 @@ int main() {
       }
     }
 
-    // lettura parametri da standard input
+    // lettura parametri da standard input.
 
     if (cmd == 'i') {  // come si mettono i const?
       std::cout << "Please write epidemic's parameter beta and gamma:\n";
@@ -63,7 +65,7 @@ int main() {
     }
 
     // lettura dei parametri da file dove compaiono nel seguente ordine:
-    // beta, gamma, S, I, R, time
+    // beta, gamma, S, I, R, time.
 
     std::string filename;
     if (cmd == 'f' && std::cin >> filename) {
@@ -138,7 +140,7 @@ int main() {
     // chiudere il programma
     else if (cmd == 'q') {
       return EXIT_SUCCESS;
-    } else {
+    } else {  // studia quest algoritmi, cosa vogliono dire? servono?
       std::cout << "Bad format, insert a new command\n";
       std::cin.clear();
       std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
