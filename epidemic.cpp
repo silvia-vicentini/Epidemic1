@@ -38,7 +38,7 @@ void Epidemic::evolve(Population &initial_population, int const time) {
       initial_population.S + initial_population.I + initial_population.R;
   auto population_it = Epidemic::population_state_.begin();
 
-  for (int i{1}; i <= time; ++i) {
+  for (int i{1}; i <= time; ++i, ++population_it) {
     *population_it = solve(*population_it, N);
     population_state_.push_back(*population_it);
   }
