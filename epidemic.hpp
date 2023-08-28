@@ -1,11 +1,13 @@
 #ifndef EPIDEMIC_HPP  // verifica tutti i const e i &&
 #define EPIDEMIC_HPP
 
-#include <cmath>  //R0 del testo è diverso rispetto al rapporto beta/gamma? perchè altrimenti i parametri sono meno di 5
+#include <cmath>
 #include <vector>
 
-struct Population {  // è giusta questa divisione tra struct e class o
-                     // vanno scambiati? Devo inserire un'altra class?
+// bisogna modificare i throw con gli assert
+// bisogna aggiungere un namespace?
+
+struct Population {
   int S{};
   int I{};
   int R{};
@@ -13,25 +15,22 @@ struct Population {  // è giusta questa divisione tra struct e class o
 
 class Epidemic {
  private:
-  double const beta_;  // devono essere const? devo usare & o * ?
+  double const beta_;
   double const gamma_;
   std::vector<Population> population_state_;
 
-  Population solve(Population const &, int const) const;
+  Population solve(Population const, int const) const;
 
  public:
-  Epidemic(double const,
-           double const);  // è giusto const qui? devo mettere anche la
-                           // popolazione iniziale tra le variabili?
+  Epidemic(double const, double const);
 
-  std::size_t size() const;  // non so se serva tato che deve essere uguale a t
+  std::vector<Population> evolve(
+      Population,
+      int const);  // questa funzione consente di calcolare l'evoluzione
+                   // della popolazione ad un istante di tempo t
 
-  void evolve(Population &,
-              int const);  // questa funzione consente di calcolare l'evoluzione
-                           // della popolazione ad un istante di tempo t
-
-  std::vector<Population> const &state()
-      const;  // questa funzione restituisce lo stato della popolazione
+  /*std::vector<Population> const &state()
+      const;  // questa funzione restituisce lo stato della popolazione*/
 };
 
 #endif
