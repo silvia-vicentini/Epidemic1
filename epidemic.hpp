@@ -13,11 +13,11 @@ struct Population {  // è giusta questa divisione tra struct e class o
 
 class Epidemic {
  private:
-  double beta_;  // devono essere const? devo usare & o * ?
-  double gamma_;
+  double const beta_;  // devono essere const? devo usare & o * ?
+  double const gamma_;
   std::vector<Population> population_state_;
 
-  Population solve(Population const &, double const, double const) const;
+  Population solve(Population const &) const;
 
  public:
   Epidemic(double const,
@@ -29,7 +29,8 @@ class Epidemic {
   void push_back(Population &);  // per inserire ogni step
                                  // dell'evoluzione della pandemia
 
-  void evolve(Population &, int const);  // questa funzione consente di calcolare l'evoluzione
+  void evolve(Population &,
+              int const);  // questa funzione consente di calcolare l'evoluzione
                            // della popolazione ad un istante di tempo t
 
   std::vector<Population> const &state()
