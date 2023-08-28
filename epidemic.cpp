@@ -14,13 +14,15 @@ Epidemic::Epidemic(double const beta, double const gamma)
     throw std::runtime_error{
         "Epidemic parameter gamma must be such that 0 <= gamma <= 1"};
   }
-  if (beta_ <= gamma_) {
+  if (beta_ / gamma_ <= 1) {
     throw std::runtime_error{
         "Epidemic parameter beta must be greather than gamma"};
   }
 }
 
-Population Epidemic::solve(Population const &prev_state, int const N) const { //bisogna verificare che le approssimazioni a numeri interi vengano svolte nella maniera corretta
+Population Epidemic::solve(Population const prev_state, int const N)
+    const {  // bisogna verificare che le approssimazioni a numeri interi
+             // vengano svolte nella maniera corretta
   double const beta{Epidemic::beta_};
   double const gamma{Epidemic::gamma_};
   int const S_i = prev_state.S - beta * prev_state.S * prev_state.I / N;
@@ -31,20 +33,17 @@ Population Epidemic::solve(Population const &prev_state, int const N) const { //
   return Population{S_i, I_i, R_i};
 }
 
-void Epidemic::evolve(Population &initial_population, int const time) {
+std::vector<Population> Epidemic::evolve(Population initial_population,
+                                         int const time) {
   population_state_.push_back(initial_population);
 
-  int const N =
-      initial_population.S + initial_population.I + initial_population.R;
-  auto population_it = Epidemic::population_state_.begin();
+  int const N = initial_population.S + initial_population.I + initial_population.R;
 
-  for (int i{0}; i <= time; ++i) {
-    population_state_[i] = solve(population_state_[i], N);
+  for (int i{0}; i < time; ++i) {
+    auto next_state = solve(population_state_[i], N);
     population_state_.push_back(population_state_[i]);
-˙}
-}
-
-std::vector<Population> const &Epidemic::state()
-    const {  // serve? Come faccio a scrivere il cout?
+  }
   return Epidemic::population_state_;
 }
+
+/*std::vector<Population> const &Epidemic::state() const {}*/
