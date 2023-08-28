@@ -60,3 +60,7 @@ int main() {
                       << population_state_[i].I << "  "
                       << population_state_[i].R << '\n';
           }˙
+
+// lettura parametri da file
+
+//grapico
