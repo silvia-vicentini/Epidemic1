@@ -7,7 +7,7 @@
 
 #include "epidemic.hpp"
 
-struct Reading {  // va messo qui o nell'header file
+struct Reading {  // va messo qui o nell'header file?
   double beta{}, gamma{};
   int S{}, I{}, R{};
   int time{};
@@ -22,7 +22,7 @@ int main() {
             << "- quit [q]\n";
   char cmd;
   while (std::cin >> cmd) {
-    // prende da command line
+    // prende da command line con popolazione iniziale S = 997, I = 3, R = 0, Parametri della pandemia beta = 0.8, gamma = 0.4, per un arco di tempo time = 7 giorni.
 
     if (cmd == 'l') {
       Epidemic epidemic{0.8, 0.4};
