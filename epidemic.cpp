@@ -25,7 +25,7 @@ Population Epidemic::solve(Population const &prev_state) const {
       prev_state.S + prev_state.I +
       prev_state
           .R;  // forse è più efficiente se non deve ricalcolare N ad ogni loop?
-  double const beta{Epidemic::beta_};
+  double const beta{Epidemic::beta_}; //è giusto scritto così?
   double const gamma{Epidemic::gamma_};
   int const S_i = prev_state.S - beta * prev_state.S * prev_state.I / N;
   int const I_i = prev_state.I + beta * prev_state.S * prev_state.I / N -
