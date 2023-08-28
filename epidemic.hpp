@@ -29,8 +29,7 @@ class Epidemic {
   void push_back(Population &);  // per inserire ogni step
                                  // dell'evoluzione della pandemia
 
-  void evolve(Population &, double const, double const,
-              int const);  // questa funzione consente di calcolare l'evoluzione
+  void evolve(Population &, int const);  // questa funzione consente di calcolare l'evoluzione
                            // della popolazione ad un istante di tempo t
 
   std::vector<Population> const &state()
