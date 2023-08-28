@@ -8,7 +8,7 @@ bool result(Population const& p, Population const& v) {
 }
 
 TEST_CASE("Testing the Epidemic development") {
-  SUBCASE("Negative beta throws") { CHECK_THROWS(Epidemic{-0.3, 0.5}); }
+  SUBCASE("Negative beta throws") { CHECK_THROWS(Epidemic{-0.3, 0.5}); }     //ci sono altre eccezioni da tenere in considerazione?
   SUBCASE("Negative gamma throws") { CHECK_THROWS(Epidemic{0.5, -0.3}); }
   SUBCASE("beta > 1") { CHECK_THROWS(Epidemic{1.5, 0.5}); }
   SUBCASE("gamma > 1") { CHECK_THROWS(Epidemic{0.5, 1.5}); }
