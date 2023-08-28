@@ -25,6 +25,18 @@ TEST_CASE("Testing the Epidemic development") {
     CHECK(result(state[1], {298, 1, 1}));
     CHECK(result(state[2], {297, 1, 2}));
     CHECK(result(state[3], {296, 1, 3}));
-    CHECK(result(state[4], {295, 1, 4}));
+    CHECK(result(state[4], {295, 1, 4}));˙
+  }
+  
+  SUBCASE("Normal use, N=300") {
+    Epidemic epidemic{0.8, 0.2};
+    Population initial_population{990, 10, 0};
+    epidemic.evolve(initial_population, 4);
+    const auto state = epidemic.state();
+    CHECK(result(state[0], {990, 10, 0}));
+    CHECK(result(state[1], {982, 16, 2}));
+    CHECK(result(state[2], {970, 25, 5}));
+    CHECK(result(state[3], {951, 39, 10}));
+    CHECK(result(state[4], {921, 61, 18}));
   }
 }
