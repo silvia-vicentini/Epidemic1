@@ -42,14 +42,13 @@ void Epidemic::push_back(Population &population_i) {
   Epidemic::population_state_.push_back(population_i);
 }
 
-void Epidemic::evolve(Population &initial_population, double const beta,
-                      double const gamma, int const time) {
+void Epidemic::evolve(Population &initial_population, int const time) {
   population_state_.push_back(initial_population);
 
   auto population_it = Epidemic::population_state_.begin();
 
   for (int i{1}; i <= time; ++i) {
-    *population_it = solve(*population_it, beta, gamma);
+    *population_it = solve(*population_it, Epidemic::beta_, Epidemic::gamma_);
     population_state_.push_back(*population_it);
   }
 }
