@@ -36,6 +36,25 @@ Discretizzando le equazioni differenziali sopra citate e considerando $$\Delta$$
 
 
 \section{Struttura del programma}
+Il progetto \`{e} organizzato nei seguenti files 
+\begin{itemize}
+\item \textit{epidemic.hpp}, un header file, contenente le definizioni di classe 
+e le dichiarazioni delle finzioni membro 
+\item \textit{epidemic.cpp}, un source file, dove si trovano le definizioni delle
+ funzioni membro
+\item \textit{epidemic.test.cpp}, l'unit test, che consente di eseguire i test
+\item \textit{main.cpp}, per testare direttamente l'implementazione del programma
+\item \textit{CMake}, per semplificare la compilazione del progetto dato che è 
+costituito da pi\`{u} di un file sorgente
+\item \textit{doctest.h}, necessario per poter eseguire i test scritti in 
+\textit{epidemic.test.cpp}
+\item \textit{.clang-format}, per formattare adeguatamente il programma
+  %forse dovrò aggiungere un file per la libreria grafica
+
+\subsection{epidemic.hpp}
+Il file epidemic.hpp è un harder file contentente le definizioni delle classi e le dichiarazioni delle funzioni membro.
+
+\section{Conclusione}
 
 \section{Compilare}
 \section{Testare}  % indicare la strategia di test
