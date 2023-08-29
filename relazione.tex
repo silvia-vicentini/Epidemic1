@@ -7,12 +7,24 @@
 \section{Abstract}
 
 \section{Cenni teorici}
-Il programma \`{e} stato sviluppato col fine di simulare la diffuzione di un'epidemia sulla base del modello teorico SIR. Data una popolazione chiusa di $N$ abitandi, questi vengono suddivisi in tre categorie:
+Il programma \è stato sviluppato col fine di simulare la diffuzione di un'epidemia sulla base del modello teorico SIR. Data una popolazione chiusa di $N$ abitandi, questi vengono suddivisi in
 \begin{itemize}
-\item I \textit{Suscettibili}, cio\`{e} coloro che possono essere contagiati.
-\item Gli \textit{Infetti}, cio\`{e} coloro che possono trasmettere la malattia.
-\item I \textit{Rimossi}, cio\`{e} coloro che si sono già ammalati e sono guariti o morti e che quindi non possono più traspettere la malattia.
+\item I \textit{Suscettibili}, cio\è coloro che possono essere contagiati
+\item Gli \textit{Infetti}, cio\è coloro che possono trasmettere la malattia
+\item I \textit{Rimossi}, cio\è coloro che sono guariti o morti
 \end{itemize}
+Dato che le morti per maattia sono incluse nella categoria R e le nascite o morti per altre cause non vengono tenute in considerazione, vale la relazione $S+R+I=N$. Chi fa parte della categoria S pu\`{o} solo spostarsi nella I, parallelamente chi nella I pu\`{o} solamente muoversi al gruppo R. Questo perch\'e ogni individuo pu\`{o} essere infettato dall'agente patogeno non pi\`{u} di una volta, per poi diventare immune o morire. 
+Lo spargimento dell'agente patogeno dipende da due fattori:
+\begin{itemize}
+\item \textit{\beta} \`{e} il tasso di contagio, ovvero esprime la probabilit\`{a} di essere contagiati.
+\item \textit{\gamma} \`{e} il tasso di guarigione, ovvero la probabilit\`{a} di guarire.
+\end{itemize}
+La variazione del numero di individui all'interno di ciascuno dei tre raggruppamenti segue le leggi differenziali
+\begin{equation}
+
+\end{equation}
+
+Bisogna evidenziare che il modello seguito apporta notevoli semplificazioni alla reale diffusione di un'epidemia, ma consente comunque di studiarne il suo andamento generale.
 
 \section{Struttura del programma}
 
