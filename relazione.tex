@@ -1,4 +1,4 @@
-\documentclass[12pt, a4paper]{article} % carattere 12 (possiamo anche fare 11)
+\documentclass[11pt, a4paper]{article} % carattere 11
 \usepackage{graphicx} % da vedere se tenerlo
 \title{Simulazione dell'evoluzione di una pandemia sulla base del modello SIR}
 \author{Matilda Pasquini e Silvia Vicentini}
@@ -7,21 +7,24 @@
 \section{Abstract}
 
 \section{Cenni teorici}
-Il programma \è stato sviluppato col fine di simulare la diffuzione di un'epidemia sulla base del modello teorico SIR. Data una popolazione chiusa di $N$ abitandi, questi vengono suddivisi in
+Il programma \`{e} stato sviluppato col fine di simulare la diffuzione di un'epidemia sulla base del modello teorico SIR. Data una popolazione chiusa di $N$ abitandi, questi vengono suddivisi in
 \begin{itemize}
-\item I \textit{Suscettibili}, cio\è coloro che possono essere contagiati
-\item Gli \textit{Infetti}, cio\è coloro che possono trasmettere la malattia
-\item I \textit{Rimossi}, cio\è coloro che sono guariti o morti
+\item I \textit{Suscettibili}, cio\`{e} coloro che possono essere contagiati
+\item Gli \textit{Infetti}, cio\`{e} coloro che possono trasmettere la malattia
+\item I \textit{Rimossi}, cio\`{e} coloro che sono guariti o morti
 \end{itemize}
 Dato che le morti per maattia sono incluse nella categoria R e le nascite o morti per altre cause non vengono tenute in considerazione, vale la relazione $S+R+I=N$. Chi fa parte della categoria S pu\`{o} solo spostarsi nella I, parallelamente chi nella I pu\`{o} solamente muoversi al gruppo R. Questo perch\'e ogni individuo pu\`{o} essere infettato dall'agente patogeno non pi\`{u} di una volta, per poi diventare immune o morire. 
 Lo spargimento dell'agente patogeno dipende da due fattori:
 \begin{itemize}
-\item \textit{\beta} \`{e} il tasso di contagio, ovvero esprime la probabilit\`{a} di essere contagiati.
-\item \textit{\gamma} \`{e} il tasso di guarigione, ovvero la probabilit\`{a} di guarire.
+\item \textit{$\beta$} \`{e} il tasso di contagio, ovvero esprime la probabilit\`{a} di essere contagiati
+
+\item \textit{$\gamma$} \`{e} il tasso di guarigione, ovvero la probabilit\`{a} di guarire
 \end{itemize}
 La variazione del numero di individui all'interno di ciascuno dei tre raggruppamenti segue le leggi differenziali
 \begin{equation}
-
+\frac{dS}{dt} = -\beta \frac{S}{N}I 
+\frac{dI}{dt} = \beta \frac{S}{N}I-\gamma I
+\frac{dR}{dt} = \gamma I
 \end{equation}
 
 Bisogna evidenziare che il modello seguito apporta notevoli semplificazioni alla reale diffusione di un'epidemia, ma consente comunque di studiarne il suo andamento generale.
