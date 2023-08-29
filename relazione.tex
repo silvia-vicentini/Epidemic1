@@ -7,7 +7,26 @@
 \section{Abstract}
 
 \section{Cenni teorici}
-Il programma è stato sviluppato col fine di simulare la diffuzione di un'epidemia sulla base del modello teorico SIR 
+Il programma \`{e} stato sviluppato col fine di simulare la diffuzione di un'epidemia sulla base del modello teorico SIR. Data una popolazione chiusa di $N$ abitandi, questi vengono suddivisi in
+\begin{itemize}
+\item I \textit{Suscettibili}, cio\`{e} coloro che possono essere contagiati
+\item Gli \textit{Infetti}, cio\`{e} coloro che possono trasmettere la malattia
+\item I \textit{Rimossi}, cio\`{e} coloro che sono guariti o morti
+\end{itemize}
+Dato che le morti per maattia sono incluse nella categoria R e le nascite o morti per altre cause non vengono tenute in considerazione, vale la relazione $S+R+I=N$. Chi fa parte della categoria S pu\`{o} solo spostarsi nella I, parallelamente chi nella I pu\`{o} solamente muoversi al gruppo R. Questo perch\'e ogni individuo pu\`{o} essere infettato dall'agente patogeno non pi\`{u} di una volta, per poi diventare immune o morire. 
+Lo spargimento dell'agente patogeno dipende da due fattori:
+\begin{itemize}
+\item \textit{$\beta$} \`{e} il tasso di contagio, ovvero esprime la probabilit\`{a} di essere contagiati
+
+\item \textit{$\gamma$} \`{e} il tasso di guarigione, ovvero la probabilit\`{a} di guarire
+\end{itemize}
+La variazione del numero di individui all'interno di ciascuno dei tre raggruppamenti segue le leggi differenziali
+\begin{equation}
+\frac{dS}{dt} = -\beta \frac{S}{N}I \\
+\frac{dI}{dt} = \beta \frac{S}{N}I-\gamma I  \\ % bisogna fare in modo che siano su righe diverse allineate
+\frac{dR}{dt} = \gamma I \\
+\end{equation}
+
 \section{Struttura del programma}
 
 \section{Compilare}
