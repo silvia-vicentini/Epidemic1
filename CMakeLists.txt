@@ -23,6 +23,7 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-o
 find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
 
 add_executable(epidemic main.cpp epidemic.cpp)
+target_link_libraries(epidemic.t PRIVATE sfml-graphics)
 
 # se il testing e' abilitato...
 #   per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
