@@ -6,7 +6,7 @@ if (!infile) {
     throw std::runtime_error {"Impossible to open file"}
 }
 
-std::vector<int> time;
+std::vector<int> time; // serve?
 std::vector<int> population_state; //oppure devoinserire singolarmente S,I e R???
 
 sf::VertexArray infectionCurve(sf::LineStrip);
