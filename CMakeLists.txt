@@ -18,6 +18,10 @@ string(APPEND CMAKE_CXX_FLAGS " -Wall -Wextra")
 string(APPEND CMAKE_CXX_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-omit-frame-pointer")
 
+# richiedi SFML, versione 2.5, e tmxlite
+# le dipendenze vengono identificate automaticamente
+find_package(SFML 2.5 COMPONENTS graphics REQUIRED)
+
 add_executable(epidemic main.cpp epidemic.cpp)
 
 # se il testing e' abilitato...
@@ -28,5 +32,6 @@ if (BUILD_TESTING)
   add_executable(epidemic.t epidemic.test.cpp epidemic.cpp)
   # aggiungi l'eseguibile epidemic.t alla lista dei test
   add_test(NAME epidemic.t COMMAND epidemic.t)
+  target_link_libraries(epidemic.t PRIVATE sfml-graphics)
 
 endif()
