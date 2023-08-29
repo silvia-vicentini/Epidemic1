@@ -4,42 +4,75 @@
 \author{Matilda Pasquini e Silvia Vicentini}
 \begin{document}
 \maketitle
-\section{Abstract}
 
 \section{Cenni teorici}
-Il programma \`{e} stato sviluppato col fine di simulare la diffuzione di un'epidemia sulla base del modello teorico SIR. Data una popolazione chiusa di $N$ abitandi, questi vengono suddivisi in
+Il programma \`{e} stato sviluppato col fine di simulare la diffuzione di 
+un'epidemia sulla base del modello teorico SIR. Data una popolazione chiusa di 
+$N$ abitandi, questi vengono suddivisi in
 \begin{itemize}
-\item I \textit{Suscettibili}, cio\`{e} coloro che possono essere contagiati
-\item Gli \textit{Infetti}, cio\`{e} coloro che possono trasmettere la malattia
-\item I \textit{Rimossi}, cio\`{e} coloro che sono guariti o morti
+\item $S$, i \textit{Suscettibili}, cio\`{e} coloro che possono essere contagiati
+\item $I$, gli \textit{Infetti}, cio\`{e} coloro che possono trasmettere la malattia
+\item $R$, i \textit{Rimossi}, cio\`{e} coloro che sono guariti o morti
 \end{itemize}
-Dato che le morti per maattia sono incluse nella categoria R e le nascite o morti per altre cause non vengono tenute in considerazione, vale la relazione $S+R+I=N$. Chi fa parte della categoria S pu\`{o} solo spostarsi nella I, parallelamente chi nella I pu\`{o} solamente muoversi al gruppo R. Questo perch\'e ogni individuo pu\`{o} essere infettato dall'agente patogeno non pi\`{u} di una volta, per poi diventare immune o morire. 
+Vale dunque la relazione $S+R+I=N$ dal momento che le morti per malattia sono 
+incluse nella categoria R e le nascite o le morti per altre cause non vengono 
+tenute in considerazione. Chi fa parte della categoria S pu\`{o} solo spostarsi 
+nella I, parallelamente, chi nella I pu\`{o} solamente muoversi nel gruppo R. 
+Questo perch\'e ogni individuo pu\`{o} essere infettato dall'agente patogeno 
+non pi\`{u} di una volta, per poi diventare immune o morire. Dato che i valori 
+$S$, $I$, $R$ rappresentano il numero di abitanti per ciascun insieme 
+\[S, I, R \in \mathbb{N}\]
 Lo spargimento dell'agente patogeno dipende da due fattori:
 \begin{itemize}
-\item \textit{$\beta$} \`{e} il tasso di contagio, ovvero esprime la probabilit\`{a} di essere contagiati
-
-\item \textit{$\gamma$} \`{e} il tasso di guarigione, ovvero la probabilit\`{a} di guarire
+\item \textit{$\beta$}, il tasso di contagio, ovvero la probabilit\`{a} di
+essere contagiati
+\item \textit{$\gamma$}, il tasso di guarigione, ovvero la probabilit\`{a} di 
+guarire
 \end{itemize}
-La variazione del numero di individui all'interno di ciascuno dei tre raggruppamenti segue le leggi differenziali
-\begin{equation}
-\frac{dS}{dt} = -\beta \frac{S}{N}I \\
-\frac{dI}{dt} = \beta \frac{S}{N}I-\gamma I  \\ % bisogna fare in modo che siano su righe diverse allineate
-\frac{dR}{dt} = \gamma I \\
+La variazione del numero di individui all'interno di ciascuno dei tre 
+raggruppamenti \`{e} definita dalle seguenti leggi differenziali
+\begin{equation} 
+\frac{dS}{dt} &= -\beta\frac{S}{N}I  \\
+\frac{dI}{dt} &= \beta\frac{S}{N}I-\gamma I \\
+\frac{dR}{dt} &= \gamma I 
 \end{equation}
-
-
-
-Bisogna evidenziare che il modello seguito apporta notevoli semplificazioni alla reale diffusione di un'epidemia, ma consente comunque di studiarne il suo andamento generale.
+L'epidemia \`{e} in espansione a condizione che $\frac{dI}{dt} > 0$. 
+Dato che \[\frac{dI}{dt}=(\beta\frac{S}{N}-\gamma) I>0\] 
+allora $\frac{\beta}{\gamma}>\frac{N}{S}$. Poich\`{e} all'inizio dell'epidemia 
+$S\approx N$, la malattia si diffonde solo se \`{e} verificata la condizione 
+che il rapporto $R_0=\frac{\beta}{\gamma}>1$.\\
+Discretizzando le tre leggi e studiando la variazione di individui in ciascun 
+gruppo in un arco temporale $\Delta t=1$ giorno, si ottengono le seguenti formule
+\begin{equation}  %bisogna allinearle, come?
+S_i = S_{i-1} - \beta \frac{S_{i-1}}{N} I_{i-1} \\
+I_i = I_{i-1} + \beta \frac{S_{i-1}}{N} I_{i-1} - \gamma I_{i-1} \\
+R_i = R_{i-1} + \gamma I_{i-1} 
+\end{equation}
+Il progetto si sviluppa a partire da queste equazioni.
+Tale modello teorico apporta notevoli semplificazioni alla reale 
+diffusione di un'epidemia, nonostante ci\`{o}, esso consente di trattare 
+l'andamento generale del problema in maniera semplice e chiara.
 
 \section{Struttura del programma}
+Il progetto \`{e} organizzato nei seguenti files 
+\begin{itemize}
+\item \textit{epidemic.hpp}, un header file, contenente le definizioni di classe 
+e le dichiarazioni delle finzioni membro 
+\item \textit{epidemic.cpp}, un source file, dove si trovano le definizioni delle
+ funzioni membro
+\item \textit{epidemic.test.cpp}, l'unit test, che consente di eseguire i test
+\item \textit{main.cpp}, per testare direttamente l'implementazione del programma
+\item \textit{CMake}, per semplificare la compilazione del progetto dato che è 
+costituito da pi\`{u} di un file sorgente
+\item \textit{doctest.h}, necessario per poter eseguire i test scritti in 
+\textit{epidemic.test.cpp}
+\item \textit{.clang-format}, per formattare adeguatamente il programma
+  %forse dovrò aggiungere un file per la libreria grafica
 
-\section{Compilare}
-\section{Testare}  % indicare la strategia di test
-\section{Eseguire} % inserire un esempio dei risultati 
-% parlare dei tre input e del grafico
+\subsection{epidemic.hpp}
+
+
 \section{Conclusione}
-
-\subsection{First Subsection} %potrebbero tornare utili
 
 
 \end{document} 
