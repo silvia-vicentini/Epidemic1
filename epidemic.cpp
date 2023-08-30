@@ -24,6 +24,7 @@ int Epidemic::solve_S(Population &population_state,  // serve?
       population_state.S - beta * population_state.S * population_state.I / N;
 
   return population_state.S;
+    if (population_state.S < 0.) {throw std::runtime_error { "susceptible must be > 0" } }
 }
 
 int Epidemic::solve_I(Population &population_state,  // serve?
@@ -35,6 +36,7 @@ int Epidemic::solve_I(Population &population_state,  // serve?
                        gamma * population_state.I;
 
   return population_state.I;
+    if (population_state.I < 0. ) { throw std::runtime_error { "infected must be > 0" } }
 }
 
 int Epidemic::solve_R(Population &population_state,  // serve?
@@ -45,6 +47,7 @@ int Epidemic::solve_R(Population &population_state,  // serve?
   population_state.R = population_state.R + gamma * population_state.I;
 
   return population_state.R;
+    if (population_state.R < 0. ) { throw std::runtime_error { "removed must be > 0" } }
 }
 
 std::size_t Epidemic::size() const {
