@@ -1,5 +1,9 @@
-\documentclass[11pt, a4paper]{article} % carattere 11
-\usepackage{graphicx} % da vedere se tenerlo
+\documentclass[11pt, a4paper]{article} 
+\usepackage{graphicx} 
+\usepackage{amsmath}
+\usepackage{color}
+\usepackage{courier}
+\graphicspath{{images/}} 
 \title{Simulazione dell'evoluzione di una pandemia sulla base del modello SIR}
 \author{Matilda Pasquini e Silvia Vicentini}
 \begin{document}
@@ -8,7 +12,7 @@
 \section{Cenni teorici}
 Il programma \`{e} stato sviluppato col fine di simulare la diffuzione di 
 un'epidemia sulla base del modello teorico SIR. Data una popolazione chiusa di 
-$N$ abitandi, questi vengono suddivisi in
+$N$ abitanti, questi vengono suddivisi in
 \begin{itemize}
 \item $S$, i \textit{Suscettibili}, cio\`{e} coloro che possono essere contagiati
 \item $I$, gli \textit{Infetti}, cio\`{e} coloro che possono trasmettere la malattia
@@ -29,24 +33,29 @@ essere contagiati
 \item \textit{$\gamma$}, il tasso di guarigione, ovvero la probabilit\`{a} di 
 guarire
 \end{itemize}
+In quanto rappresentano due probabilit\`{a}, devono valere le relazioni $\beta \in [0, 1]$ e $\gamma \in [0, 1]$.
+
 La variazione del numero di individui all'interno di ciascuno dei tre 
 raggruppamenti \`{e} definita dalle seguenti leggi differenziali
-\begin{equation} 
+\begin{align*} 
 \frac{dS}{dt} &= -\beta\frac{S}{N}I  \\
 \frac{dI}{dt} &= \beta\frac{S}{N}I-\gamma I \\
 \frac{dR}{dt} &= \gamma I 
-\end{equation}
+\end{align*}
 L'epidemia \`{e} in espansione a condizione che $\frac{dI}{dt} > 0$. 
 Dato che \[\frac{dI}{dt}=(\beta\frac{S}{N}-\gamma) I>0\] 
 allora $\frac{\beta}{\gamma}>\frac{N}{S}$. Poich\`{e} all'inizio dell'epidemia 
 $S\approx N$, la malattia si diffonde solo se \`{e} verificata la condizione 
-che il rapporto $R_0=\frac{\beta}{\gamma}>1$.\\
+che il rapporto $r_0=\frac{\beta}{\gamma}>1$. \\
+
 Discretizzando le tre leggi e studiando la variazione di individui in ciascun 
 gruppo in un arco temporale $\Delta t=1$ giorno, si ottengono le seguenti formule
-\begin{equation}  %bisogna allinearle, come?
-S_i = S_{i-1} - \beta \frac{S_{i-1}}{N} I_{i-1} \\
-I_i = I_{i-1} + \beta \frac{S_{i-1}}{N} I_{i-1} - \gamma I_{i-1} \\
-R_i = R_{i-1} + \gamma I_{i-1} 
+\begin{equation}
+\begin{align*} 
+S_i &= S_{i-1} - \beta \frac{S_{i-1}}{N} I_{i-1} \\
+I_i &= I_{i-1} + \beta \frac{S_{i-1}}{N} I_{i-1} - \gamma I_{i-1} \\
+R_i &= R_{i-1} + \gamma I_{i-1} 
+\end{align*}
 \end{equation}
 Il progetto si sviluppa a partire da queste equazioni.
 Tale modello teorico apporta notevoli semplificazioni alla reale 
@@ -56,65 +65,134 @@ l'andamento generale del problema in maniera semplice e chiara.
 \section{Struttura del programma}
 Il progetto \`{e} organizzato nei seguenti files 
 \begin{itemize}
-    \item \textbf{epidemic.hpp}, un header file, contenente le definizioni di classe 
-    e le dichiarazioni delle finzioni membro 
-    \item \textbf{epidemic.cpp}, un source file, dove si trovano le definizioni delle
-    funzioni membro
-    \item \textbf{epidemic.test.cpp}, l'unit test, che consente di eseguire i test
-    \item \textbf{main.cpp}, per testare direttamente l'implementazione del programma
-    \item \textbf{CMake}, per semplificare la compilazione del progetto dato che è 
-    costituito da pi\`{u} di un file sorgente
-    \item \textbf{doctest.h}, necessario per poter eseguire i test scritti in 
-    \textit{epidemic.test.cpp}
-    \item \textbf{.clang-format}, per formattare adeguatamente il programma
-    %forse dovrò aggiungere un file per la libreria grafica
+\item \textit{epidemic.hpp}, un header file, contenente le definizioni di classe e le dichiarazioni delle funzioni membro 
+\item \textit{epidemic.cpp}, un source file, dove si trovano le definizioni delle funzioni membro
+\item \textit{epidemic.test.cpp}, l'unit test, che consente di eseguire i test
+\item \textit{main.cpp}, per testare direttamente l'implementazione del programma
+\item \textit{CMake}, per semplificare la compilazione del progetto dato che è costituito da pi\`{u} di un file sorgente
+\item \textit{doctest.h}, necessario per poter eseguire i test scritti in 
+\textit{epidemic.test.cpp}
+\item \textit{.clang-format}, per formattare il programma
+%forse dovrò aggiungere un file per la libreria grafica
+\end{itemize}
 
-    \subsection{epidemic.hpp}
 
-    \subsection{epidemic.cpp}
-    \subsection{epidemic.test.cpp}
-    \subsection{main.hpp}
-        Il file main consente di eseguire il programma ricavando i parametri iniziali da standard input, da file di 
-        configurazione o da riga di comando. Per ciascuno di essi il file main richiede di inserire un apposito carattere
-        \begin{itemize}
-        \item \textit{f} seguito da \textit{FILE NAME} legge i valori dei parametri iniziali salvati sul file indicato.
-        In esso i valori devono essere collocati nel seguente ordine $\beta$, $\gamma$, $S, I, R, time$
-        \item \textit{i} riceve i dati necessari da standard imput
-        \item \textit{l} si basa su costanti gi\`{a} presenti su riga di comando
-        \item \textit{q} chiude il programma
-    
-        In chiusura di ciascuna esecuzione il programma d\`{a} la possibilit\`{a} di graficare l'andamento delle tre 
-        variabili S I R. Attraverso il comando \textit{g} si riproduce il grafico sulla base dei risultati ottenuti, 
-        qualsiasi altro comando consente di tornare alla schermata iniziale, dove si può scegliere se avviare una nuova 
-        simulazione o chiudere il programma. 
+\subsection{epidemic.hpp}
+Il file \textit{epidemic.hpp} è un hearder file contenente le definizioni delle classi e le dichiarazioni delle funzioni membro. \\
 
+Innanzitutto viene definita una struttura chiamata \textbf{\texttt{Population}}, la quale rappresenta una popolazione suddivisa in tre gruppi: $S$, $I$ e $R$. Ognuno di questi tre gruppi è rappresentato da una variabile intera all'interno della struttura. \\ 
+
+Viene inoltre \textcolor{red}{definita} %si dice definita?
+la classe \textbf{\texttt{Epidemic}}, che contiene nella parte private:
+\begin{itemize}
+    \item \textbf{\texttt{double const beta\_}}
+    \item \textbf{\texttt{double const gamma\_}}
+    \item \textbf{\texttt{std::vector<Population> population\_state\_}}
+    \item \textbf{\texttt{solve}}
+\end{itemize}
+
+\textbf{\texttt{double const beta\_}} \`{e} una variabile membro costante di tipo \textit{double}, chiamata \textbf{\texttt{beta\_}}. Essa esprime la probabilit\`{a} di trasmissione della malattia.
+
+\textbf{\texttt{double const gamma\_}} \`{e} una variabile membro costante di tipo \textit{double}, chiamata \textbf{\texttt{gamma\_}}. Questa indica la probabilit\`{a} di guarigione dell'epidemia in esame.
+
+\textbf{\texttt{std::vector<Population> population\_state\_}} \`{e} un vettore di oggetti di tipo \textit{Population} di nome \textbf{\texttt{population\_state\_}}. In questo verr\`{a} registrato lo sviluppo temporale di ciascuno dei tre gruppi di individui.
+
+\textbf{\texttt{solve}} \`{e} una funzione membro della classe che restituisce un oggetto di tipo \textit{Population}. Questo metodo consente di aggiornare i dati riguardanti le tre categorie nelle quali \`{e} suddivisa la popolazione. \\
+
+Nella parte pubblica si dichiarano:
+\begin{itemize}
+    \item \textbf{\texttt{Epidemic}}
+    \item \textbf{\texttt{evolve}}
+\end{itemize}
+
+\textbf{\texttt{Epidemic}} \`{e} un costruttore della classe che prende come argomento due parametri di tipo \textit{double}. La sua utilit\`{a} \`{e} quella di inizializzare le variabili private della classe \textbf{\texttt{beta\_}} e \textbf{\texttt{gamma\_}}.
+
+\textbf{\texttt{evolve}} \`{e} un metodo che prende come argomenti un oggetto di tipo \textit{Population} e un \textit{int const} e restituisce un vettore di oggetti di tipo \textit{Population}. Ciascuno di essi rappresenta lo stato della popolazione in una determinata giornata, dunque l'intero vettore registra l'intera diffusione dell'epidemia.\\
+%\item \textbf{\texttt{state}}, una funzione che restituisce lo stato della popolazione. 
+% non so se tenere questa funzione perchè non so se serva, ricordiamoci che nel caso va tolta
+
+Il tutto \`{e} racchiuso in un namespace di nome \textbf{\texttt{pf}}.
+\subsection{epidemic.cpp}
+In questo file sorgente vengono definite le funzioni membro.
+\begin{itemize}
+\item \textbf{\texttt{Epidemic}}
+\item \textbf{\texttt{beta}}
+\item \textbf{\texttt{gamma}}
+\end{itemize}
+ Si definisce il costruttore \textbf{\texttt{Epidemic}} che dipende dai due parametri \textbf{\texttt{beta}} e \textbf{\texttt{gamma}}. Tramite i \textit{throw} si verifica che questi rientrino nei loro domini di appartenenza. In maniera analoga si appura che sia verificata la relazione $r_0=\frac{\beta}{\gamma}>1$, condizione necessaria per la crescita del numero di infetti. \\
+ 
+ La funzione \textbf{\texttt{solve}} calcola sulla base delle equazioni (1) come varia in una giornata il numero di individui all'interno di ciascuno dei tre raggruppamenti in cui \`{e} suddivisa la popolazione. Per fare ci\`{o}, riceve come primo argomento un oggetto di tipo \textit{Population} denominato \textbf{\texttt{prev\_state}}. Per essere pi\`{u} chiari, i dati $S_{i-1}$, $I_{i-1}$ e $R_{i-1}$ sono espressi da \textbf{\texttt{prev\_state}}, mentre $S_i$, $I_i$ e $R_i$ vengono calcolati da \textbf{\texttt{solve}}. Il secondo argomento richiesto da \textbf{\texttt{solve}} \`{e} il numero totale di individui nella popolazione, calcolato a partire dalla somma delle tre categorie iniziali: $N=S+I+R$. Tramite questa scelta, dato che $N$ \`{e} costante, non dovr\`{a} essere ricalcolato ad ogni iterazione dell'algoritmo finale. \\
+ 
+In \textbf{\texttt{evolve}} viene implementato l'algoritmo chiave di tutto il programma. Innanzitutto viene aggiunto al vettore \textbf{\texttt{population\_state\_}}, fin'ora vuoto, la suddivisione iniziale della popolazione, registrata come elemento di tipo \textit{Population}, \textbf{\texttt{initial\_population}}, tramite il metodo fornito dalla Standard Library \textit{push.back}. Si calcola il numero totale $N$ degli individui tramite le informazioni riguardanti lo stato iniziale della popolazione.
+Si avvia quindi un ciclo \textit{for} che esegue tante iterazioni quante indicate dall'argomento $\textbf{\texttt{time}} + 1$ (il conteggio prende inizio dalla giornata 0, pertanto si deve ottenere un campione di suddivisioni pari al numero di giorni dall'inizio dell'epidemia +1). Per non sovrascrivere l'oggetto di tipo \textit{Population} che esprime la suddivisione del giorno precedente, all'inizio di ogni loop viene creato un nuovo oggetto dello stesso tipo a cui vengono attribuiti i valori calcolati dalla funzione \textbf{\texttt{solve}}. Infine esso viene aggiunto a \textbf{\texttt{population\_state\_}}. Conclusi i loop, \textbf{\texttt{evolve}} restituisce il vettore completo.
+
+%scrivere la parte di definizione della funzioe graphic
+\subsection{epidemic.test.cpp}
+Il file \textit{epidemic.test.cpp} \`{e} quello responsabile dell'esecuzione dei test. Per fare ci\`{o} bisogna inserire in shell i comandi
+\begin{itemize}
+\item 
+\textbf{cmake -S . -B build -DCMAKE\_BUILD\_TYPE=Debug} e 
+    \textbf{cmake --build build} per compilare.  %da verificare
+\item \textbf{cmake --build build --target test} per eseguire i test.
+\end{itemize}
+I primi quattro test verificano i corretto funzionamento dei \textit{throw} nel caso in cui $\beta$ e $\gamma$ non rientrino nei rispettivi limiti di esistenza. Lo stesso avviene nel caso in cui $r_0=\frac{\beta}{\gamma}>1$. 
+
+Si svolgono i test per i seguenti casi
+\begin{enumerate}
+    \item Caso in cui $N=300 $ e $ r_0 \rightarrow 1$: \\ $\beta = 0.8$, $\gamma = 0.79$, $S_0 = 299$, $I_0 = 1$, $R_0 = 0$, $day = 15$ \\
+    Il test \`{e} stato eseguito per i giorni da 0 a 4 e da 13 a 15.
+    \item Caso in cui $N=300$ e $\beta >> \gamma$: \\ $\beta = 0.99$, $\gamma = 0.01$, $S_0 = 299$, $I_0 = 1$, $R_0 = 0$, $day = 15$ \\
+        Il test \`{e} stato eseguito per i giorni da 0 a 4 e da 13 a 15.
+    \item Caso in cui $N=6\cdot10^6$ \\ $\beta = 0.9$, $\gamma = 0.1$, $S_0 = 299$, $I_0 = 325$, $R_0 = 0$, $day = 15$
+    \item 
+\end{enumerate}
+
+\subsection{main.hpp}
+Il file \textit{main.cpp} consente di eseguire il programma, inserendo i seguenti comandi su shell 
+%verifica che sia giusto!!!!
+\begin{itemize}
+\item \textbf{cmake -S . -B build -DCMAKE\_BUILD\_TYPE=Debug} e \textbf{cmake --build build} per compilare  %da sistemare
+\item \textbf{./build/epidemic} per eseguire
+\end{itemize}
+I parametri iniziali possono essere presi da file di configurazione, da standard input o da riga di comando. Per ciascuno di essi, il file \textit{main} richiede di inserire un apposito carattere:
+\begin{itemize}
+\item \textbf{l} i parametri sono stabiliti di default su riga di comando e valgono $\beta = 0.8$, $\gamma = 0.4$, $S_0 = 997$, $I_0 = 3$, $R_0 = 0$, $day = 40$.
+\item \textbf{i} riceve i dati di partenza da standard input.
+\item \textbf{f} seguito da \textit{FILE NAME} legge i valori dei parametri iniziali salvati sul file indicato. In esso i valori devono essere collocati nel seguente ordine $\beta$, $\gamma$, $S_0$, $I_0$, $R_0$, $day$. Se l'ordine non viene rispettato, i valori letti vengono interpretati secondo significati diversi rispetto al loro proprio ed il risultato ottenuto non sar\`{a} quello cercato.
+\item \textbf{q} chiude il programma.
+\end{itemize}
+L'output del programma è costituito da una tabulazione dei valori di $day$, $S$, $I$ e $R$ su standard output, così da registrare la variazione di individui facenti parte ciascun raggruppamento nell'arco di una giornata. \\
+
+In Table 1 si riporta un esempio di output ottenuto utilizzando come valori in input quelli salvati su riga di comando. 
+%aggiungere un esempio della schermata di output da processo l
+\begin{center}
+\textit{Report for each of the stored states of population:}
+\begin{table}[htbp]
+  \centering
+\begin{tabular}{c c c c}
+ day & S & I & R \\ 
+ & &  &  \\  
+  & &  &  
+\end{tabular}
+\caption{Output ottenuto a partire dai dati registrati in riga di comando dove $\beta = 0.8$, $\gamma = 0.4$, $S_0 = 997$, $I_0 = 3$, $R_0 = 0$, $day = 40$.}\label{etichetta}
+  \medskip
+\end{table}
+\end{center}}
+
+
+In chiusura di ciascuna esecuzione, si d\`{a} la possibilit\`{a} di graficare l'andamento delle tre variabili S, I e R attraverso il comando \textbf{g}. Qualsiasi altro comando consente di tornare alla schermata iniziale, dove si può scegliere se avviare una nuova simulazione o chiudere il programma. Nel grafico ottenuto, sull'asse delle ascisse è collocato il tempo in giorni, mentre su quello delle ordinate, il numero di individui. Le tre curve, di colore blu, rosso e verde, rappresentano rispettivamente la variazione dei parametri S, I, e R.\\
+
+In Figure 1 si riporta un esempio di grafico ottenuto utilizzando come valori in input quelli salvati su riga di comando. 
+%inserire grafico e fare piccola descrizione come per le relazioni di lab
+%\includegraphics{grafico}  
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.75\textwidth]{mesh}
+    \caption{Grafico realizzato sulla base del procedimento avviato col comando \textbf{l}, dove i parametri iniziali valgono  $\beta = 0.8$, $\gamma = 0.4$, $S_0 = 997$, $I_0 = 3$, $R_0 = 0$, $day = 40$. Sull'asse delle ascisse è collocato il tempo in giorni, su quello delle ordinate il numero di individui. Le tre curve, di colore blu, rosso e verde, rappresentano rispettivamente la variazione dei parametri S, I, e R.}
+    \label{fig:mesh1}
+\end{figure}
 
 \section{Conclusione}
 
 
-\end{document} 
-
-
-- scaricare la versione giusta a secondo del sistema operativo (nel mio caso ho preso la versione: SFML-2.6.0-macos-clang-64-bit per 10.15 OS)
-
-- decomprimere il contenuto del file scaricato
-
-- copiare il contenuto della sottocartella Frameworks in /Library/Frameworks 
-- copiare il contenuto della sottocartella extlib in /Library/Frameworks 
-
-
-A questo punto con un editor qualsiasi componi il tuo file cpp (nel mio caso sfml_app.cpp)
-
-Compilazione da linea di comando (terminal)
-
--compilazione
-g++ -F /Library/Frameworks -c sfml_app.cpp
-
-- link delle librerie
-g++ -F /Library/Frameworks sfml_app.o -o sfml_app -framework sfml-window -framework sfml-graphics -framework sfml-system
-
-- esegui l'applicazione
-exec ./sfml_app
-
-
-Nel caso usi vscode devi verificare che /Library/Frameworks sia nel path di ricerca della librerie
+\end{document}
