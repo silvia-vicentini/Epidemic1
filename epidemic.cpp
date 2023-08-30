@@ -1,9 +1,9 @@
 #include "epidemic.hpp"
 
-#include <Graph.h>
+// #include <Graph.h>
 
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
+// #include <SFML/Graphics.hpp>
+// #include <SFML/System.hpp>
 #include <cmath>
 #include <stdexcept>  //per fare i throw
 #include <vector>
@@ -25,23 +25,38 @@ Epidemic::Epidemic(double const beta, double const gamma)
   }
 }
 
+// dobbiamo mettere altre condizioni di verifica: che S I R siano sempre
+// naturali
 
-//dobbiamo mettere altre condizioni di verifica: che S I R siano sempre naturali
-
-Population Epidemic::solve(Population const prev_state, int const N)
-    const {  // bisogna verificare che le approssimazioni a numeri interi
-             // vengano svolte nella maniera corretta
+Population Epidemic::solve(Population const prev_state, int const N) {
   double const beta{Epidemic::beta_};
   double const gamma{Epidemic::gamma_};
-  int const S_i = prev_state.S - beta * prev_state.S * prev_state.I / N;
-  int const I_i = prev_state.I + beta * prev_state.S * prev_state.I / N -
-                  gamma * prev_state.I;
-  int const R_i = prev_state.R + gamma * prev_state.I;
+  int S_i = std::round(prev_state.S - beta * prev_state.S * prev_state.I / N);
+  int I_i = std::round(prev_state.I + beta * prev_state.S * prev_state.I / N -
+                       gamma * prev_state.I);
+  int R_i = std::round(prev_state.R + gamma * prev_state.I);
 
   return Population{S_i, I_i, R_i};
 }
 
-std::vector<Population> Epidemic::evolve(Population initial_population,
+Population approx(Population population_state, int const N) {
+  int total = population_state.S + population_state.I + population_state.R;
+  if (total != N) {
+    int diff = total - N;
+    if (diff > 0) {
+      population_state.R -= diff;
+    } else {
+      population_state.I -= diff;
+    }
+  }
+  return Population{population_state.S, population_state.I, population_state.R};
+}
+
+Population correcting(Population const population_state, int const N) {
+  return Population{approx(solve(population_state, N), N)};
+}
+
+std::vector<Population> Epidemic::evolve(Population const initial_population,
                                          int const time) {
   population_state_.push_back(initial_population);
 
@@ -49,21 +64,19 @@ std::vector<Population> Epidemic::evolve(Population initial_population,
       initial_population.S + initial_population.I + initial_population.R;
 
   for (int i{0}; i < time; ++i) {
-    auto next_state = solve(population_state_[i], N);
+    auto next_state = correcting(
+        population_state_[i],
+        N);  // ora in teoria dovrebbe appossimare nella maniera corretta
     population_state_.push_back(next_state);
   }
   return Epidemic::population_state_;
 }
 
-
-
-
-
-
-
+/*
 
 void Epidemic::graph(int time, std::vector<Population> population_state_) {
-  // bisogna creare tre grafici da sovrapporre, uno per l'andamento di S uno per
+  // bisogna creare tre grafici da sovrapporre, uno per l'andamento di S uno
+per
   // quello di I uno per quello di R
   if (Epidemic::population_state_.size() < 2) {
     throw std::runtime_error{"Not enough entries to draw a graphic"};
@@ -75,7 +88,8 @@ void Epidemic::graph(int time, std::vector<Population> population_state_) {
 
   // Create the main window
   sf::RenderWindow window(sf::VideoMode(800, 600),
-                          "Epidemic evolution");  // che libreria bisogna usare?
+                          "Epidemic evolution");  // che libreria bisogna
+usare?
 
   Simple_window window{100, 100, 600, 400, "Epidemic development"};
   window.set_color(Color::white);
@@ -111,7 +125,7 @@ void Epidemic::graph(int time, std::vector<Population> population_state_) {
     window.draw(Susceptible_Curve);
     window.display();
   }
-}
+}*/
 }  // namespace pf
 
 /*std::vector<Population> const &Epidemic::state() const {}*/
