@@ -53,6 +53,19 @@ costituito da pi\`{u} di un file sorgente
 
 \subsection{epidemic.hpp}
 Il file epidemic.hpp è un harder file contentente le definizioni delle classi e le dichiarazioni delle funzioni membro.
+Inanzitutto viene definita una struttura chiamata "Population", la quale rappresenta una popolazione suddivisa in tre gruppi: S,I e R. Ognuno di questi tre gruppi è rappresentata da una variabile intera all'interno della struttura.
+Viene inoltre definita la classe Epidemic, all'interno della quale vengono definite nella parte private:
+\item \textit{double const beta_}, una variabile membro costante di tipo double, chiamata "beta_" 
+\item \textit{double const gamma_}, una variabile membro costante di tipo double, chiamata "gamma_"
+\item \textit{std::vector<Population> population_state}, un vettore di oggetti di tipo "Population"
+\item \textit{Population solve(Population const, int const) const}, una funzione membro della classe.
+La definizione della calsse Epidemic contiene inoltre anche dei metodi pubblici, che sono i seguenti:
+\item \textit{Epidemic(double const, double const)}, cioè il costruttore della classe che prende come argomento due parametri di tipo double e viene utilizzato per inizializzare le variabili private della classe beta_ e gamma_
+\item \textit{std::vector<Population> evolve(Population, int const)} membro chiamato "evolve" che prende come argomenti un oggetto population e un intero costante e che restituisce un vettore di oggetti "Population" i quali rappresentano lo stato evoluto della popolazione nel tempo.
+\item \textit{std::vector<Population> const &state() const}
+
+
+
 
 \section{Conclusione}
 
