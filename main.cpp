@@ -1,7 +1,7 @@
 int main()˙{
   // grafico
 sf::RenderWindow window((800, 600), "Epidemic evolution");
-std::ifstream infile (" ");// metti tra virgolette nome del file da cui prendi dati
+std::ifstream infile ("epidemic.cpp");// metti tra virgolette nome del file da cui prendi dati
 if (!infile) { 
     throw std::runtime_error {"Impossible to open file"}
 }
