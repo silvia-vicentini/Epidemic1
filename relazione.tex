@@ -32,9 +32,9 @@ guarire
 La variazione del numero di individui all'interno di ciascuno dei tre 
 raggruppamenti \`{e} definita dalle seguenti leggi differenziali
 \begin{equation} 
-\frac{dS}{dt} = -\beta\frac{S}{N}I  \\
-\frac{dI}{dt} = \beta\frac{S}{N}I-\gamma I \\
-\frac{dR}{dt} = \gamma I 
+\frac{dS}{dt} &= -\beta\frac{S}{N}I  \\
+\frac{dI}{dt} &= \beta\frac{S}{N}I-\gamma I \\
+\frac{dR}{dt} &= \gamma I 
 \end{equation}
 L'epidemia \`{e} in espansione a condizione che $\frac{dI}{dt} > 0$. 
 Dato che \[\frac{dI}{dt}=(\beta\frac{S}{N}-\gamma) I>0\] 
@@ -56,23 +56,65 @@ l'andamento generale del problema in maniera semplice e chiara.
 \section{Struttura del programma}
 Il progetto \`{e} organizzato nei seguenti files 
 \begin{itemize}
-\item \textit{epidemic.hpp}, un header file, contenente le definizioni di classe 
-e le dichiarazioni delle finzioni membro 
-\item \textit{epidemic.cpp}, un source file, dove si trovano le definizioni delle
- funzioni membro
-\item \textit{epidemic.test.cpp}, l'unit test, che consente di eseguire i test
-\item \textit{main.cpp}, per testare direttamente l'implementazione del programma
-\item \textit{CMake}, per semplificare la compilazione del progetto dato che è 
-costituito da pi\`{u} di un file sorgente
-\item \textit{doctest.h}, necessario per poter eseguire i test scritti in 
-\textit{epidemic.test.cpp}
-\item \textit{.clang-format}, per formattare adeguatamente il programma
-  %forse dovrò aggiungere un file per la libreria grafica
+    \item \textbf{epidemic.hpp}, un header file, contenente le definizioni di classe 
+    e le dichiarazioni delle finzioni membro 
+    \item \textbf{epidemic.cpp}, un source file, dove si trovano le definizioni delle
+    funzioni membro
+    \item \textbf{epidemic.test.cpp}, l'unit test, che consente di eseguire i test
+    \item \textbf{main.cpp}, per testare direttamente l'implementazione del programma
+    \item \textbf{CMake}, per semplificare la compilazione del progetto dato che è 
+    costituito da pi\`{u} di un file sorgente
+    \item \textbf{doctest.h}, necessario per poter eseguire i test scritti in 
+    \textit{epidemic.test.cpp}
+    \item \textbf{.clang-format}, per formattare adeguatamente il programma
+    %forse dovrò aggiungere un file per la libreria grafica
 
-\subsection{epidemic.hpp}
+    \subsection{epidemic.hpp}
+
+    \subsection{epidemic.cpp}
+    \subsection{epidemic.test.cpp}
+    \subsection{main.hpp}
+        Il file main consente di eseguire il programma ricavando i parametri iniziali da standard input, da file di 
+        configurazione o da riga di comando. Per ciascuno di essi il file main richiede di inserire un apposito carattere
+        \begin{itemize}
+        \item \textit{f} seguito da \textit{FILE NAME} legge i valori dei parametri iniziali salvati sul file indicato.
+        In esso i valori devono essere collocati nel seguente ordine $\beta$, $\gamma$, $S, I, R, time$
+        \item \textit{i} riceve i dati necessari da standard imput
+        \item \textit{l} si basa su costanti gi\`{a} presenti su riga di comando
+        \item \textit{q} chiude il programma
+    
+        In chiusura di ciascuna esecuzione il programma d\`{a} la possibilit\`{a} di graficare l'andamento delle tre 
+        variabili S I R. Attraverso il comando \textit{g} si riproduce il grafico sulla base dei risultati ottenuti, 
+        qualsiasi altro comando consente di tornare alla schermata iniziale, dove si può scegliere se avviare una nuova 
+        simulazione o chiudere il programma. 
 
 
 \section{Conclusione}
 
 
 \end{document} 
+
+
+- scaricare la versione giusta a secondo del sistema operativo (nel mio caso ho preso la versione: SFML-2.6.0-macos-clang-64-bit per 10.15 OS)
+
+- decomprimere il contenuto del file scaricato
+
+- copiare il contenuto della sottocartella Frameworks in /Library/Frameworks 
+- copiare il contenuto della sottocartella extlib in /Library/Frameworks 
+
+
+A questo punto con un editor qualsiasi componi il tuo file cpp (nel mio caso sfml_app.cpp)
+
+Compilazione da linea di comando (terminal)
+
+-compilazione
+g++ -F /Library/Frameworks -c sfml_app.cpp
+
+- link delle librerie
+g++ -F /Library/Frameworks sfml_app.o -o sfml_app -framework sfml-window -framework sfml-graphics -framework sfml-system
+
+- esegui l'applicazione
+exec ./sfml_app
+
+
+Nel caso usi vscode devi verificare che /Library/Frameworks sia nel path di ricerca della librerie
