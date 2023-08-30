@@ -66,6 +66,13 @@ void Epidemic::evolve(Population &population_state, double const &beta,
     population_state.R = solve_R(population_state, beta, gamma, time);
     population_state_.push_back(population_state);
   }
+    std::round(population_state.S);
+    std::round(population_state.I);
+    std::round(population_state.R);
+
+    int total = population_state.S + population_state.I + population_state.R
+    if (total != N) {int diff = total -N; if (diff > 0) { population_state.R -= diff;} else { population_state.S -= diff;} }
+    
 }
 
 std::vector<Population> const &Epidemic::state()
