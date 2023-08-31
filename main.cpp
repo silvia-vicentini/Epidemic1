@@ -26,7 +26,7 @@ sf::Font font;
   sf::Vector2f graphSize(600.f, 400.f); // i valori sono a caso
   sf::Vector2f graphPosition(100.f,100.f); // i valori sono a caso. Definizione delle dimesioni e posizioni del grafico.
   float maxXValue = 50; //stabilisci quale è il valore max sull'asse delle x
-  float maxYValue = 100; //stabilisci quale è il valore max sull'asse delle y
+  float maxYValue = Population.size(); //stabilisci quale è il valore max sull'asse delle y
   for (float y = 0; y <= maxYValue; y += 20.f) //il valore 20.f è a caso
     { sf::Vertex line [] =  { 
      sf::Vertex (sf::Vector2f (graphPosition.x, graphPosition.y + graphSize.y -(y/ maxYvalue)* graphSize.y), sf::Color::Black ), 
@@ -63,6 +63,13 @@ sf::Font font;
       yTicks.push_back(tickName); // l'oggeto tickName viene aggiunto al vettore xTicks che conterrà tutte le etichette delle tacchette lungo l'asse delle x
   }
 
+sf::VertexArray SusceptibleCurve (sf::LineStrip); // creo le curve
+sf::VertexArray InfectionCurve (sf::LineStrip);
+sf::VertexArray RecoveryCurve (sf::LineStrip);
+
+
+
+  
   while (window.isOpen())
 {
      sf::Event event;
@@ -85,24 +92,3 @@ for (const sf::Text& tick : yTicks) { window.draw(tick); }
   
 
 
-std::vector<int> time; // serve?
-std::vector<int> population_state; //oppure devoinserire singolarmente S,I e R???
-
-sf::VertexArray infectionCurve(sf::LineStrip);
-sf::VertexArray recoveryCurve(sf::LineStrip);
-sf:VertexArray susceptibleCurve(sf::LineStrip);
-
-while (window.isOpen())
-{
-     sf::Event event;
-        while (window.pollEvent(event))
-        {if (event.type == sf::Event::Closed)
-                window.close();
-        }
-        window.clear(sf::Color::White);
-
-window.draw(infectionCurve);
-window.draw(recoveryCurve);
-window.draw(susceptibleCurve);
-}
-}
