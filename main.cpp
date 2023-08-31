@@ -5,7 +5,9 @@ sf::RenderWindow window((800, 600), "Epidemic evolution"); //crea finestra grafi
   sf::RectangleShape xAxis (sf::Vector2f (window.getSize().x, 2.f); //crea asse x che ha dimensioni: lungo quanto la lunghezza della finestra e alto due unità
  xAxis.setPosition(0.f, window.getSize().y/2); // imposta posizione dell'asse x. posizionato all'inizio della finestra e a metà altezza della finestra
   xAxis.setFillColor (sf::Color::Black); // asse x di colore nero
-
+sf::Text xAxisLabel ("Tempo", font, 20); // non so a cosa serva quel 20
+  
+  
 sf::RectangleShape yAxis (sf::Vector2f(2.f, window.getSize().y));
   yAxis.setPosition(window.getSize().x /2, 0.f);
   yAxis.setFillColor(sf::Color::Black);
@@ -38,7 +40,7 @@ while (window.isOpen())
         {if (event.type == sf::Event::Closed)
                 window.close();
         }
-        window.clear();
+        window.clear(sf::Color::White);
 
 window.draw(infectionCurve);
 window.draw(recoveryCurve);
