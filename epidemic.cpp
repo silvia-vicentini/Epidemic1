@@ -1,5 +1,7 @@
 #include "epidemic.hpp"
 
+#include <assert.h>
+
 // #include <Graph.h>
 
 // #include <SFML/Graphics.hpp>
@@ -25,9 +27,6 @@ Epidemic::Epidemic(double const beta, double const gamma)
   }
 }
 
-// dobbiamo mettere altre condizioni di verifica: che S I R siano sempre
-// naturali
-
 Population Epidemic::solve(Population const prev_state, int const N) {
   double const beta{Epidemic::beta_};
   double const gamma{Epidemic::gamma_};
@@ -36,13 +35,17 @@ Population Epidemic::solve(Population const prev_state, int const N) {
                        gamma * prev_state.I);
   int R_i = std::round(prev_state.R + gamma * prev_state.I);
 
+  if (S_i < 0 || I_i < 0 || R_i < 0) {
+    throw std::runtime_error{"All the parameters must be > 0"};
+  }
+
   return Population{S_i, I_i, R_i};
 }
 
-Population approx(Population population_state, int const N) {
-  int total = population_state.S + population_state.I + population_state.R;
-  if (total != N) {
-    int diff = total - N;
+Population Epidemic::approx(Population population_state, int const N) {
+  int tot = population_state.S + population_state.I + population_state.R;
+  if (tot != N) {
+    int diff = tot - N;
     if (diff > 0) {
       population_state.R -= diff;
     } else {
@@ -52,11 +55,11 @@ Population approx(Population population_state, int const N) {
   return Population{population_state.S, population_state.I, population_state.R};
 }
 
-Population correcting(Population const population_state, int const N) {
+Population Epidemic::correct(Population population_state, int const N) {
   return Population{approx(solve(population_state, N), N)};
 }
 
-std::vector<Population> Epidemic::evolve(Population const initial_population,
+std::vector<Population> Epidemic::evolve(Population initial_population,
                                          int const time) {
   population_state_.push_back(initial_population);
 
@@ -64,9 +67,7 @@ std::vector<Population> Epidemic::evolve(Population const initial_population,
       initial_population.S + initial_population.I + initial_population.R;
 
   for (int i{0}; i < time; ++i) {
-    auto next_state = correcting(
-        population_state_[i],
-        N);  // ora in teoria dovrebbe appossimare nella maniera corretta
+    auto next_state = correct(population_state_[i], N);
     population_state_.push_back(next_state);
   }
   return Epidemic::population_state_;
