@@ -16,7 +16,11 @@ sf::Font font;
   sf::Text xAxisName("Time", font, 20);
   sf::Text yAxisName ("Number of people", font, 20); 
   xAxisName.setPosition (window.getSize().x -100, window.getSize().y - 40); //non ho la minima idea di dove lo abbia posizionato,controlla!!!
-  yAxisName.setPosition (20,20)
+  yAxisName.setPosition (20,20) //non ho la minima idea di dove lo abbia posizionato,controlla!!!
+
+  float maxXValue =  //stabilisci quale è il valore max sull'asse delle x
+  float maxYValue =  //stabilisci quale è il valore max sull'asse delle y
+  for (float y = 0; y <= maxYValue; y += 20.f) { sf::VertexLine }
 
 
 
