@@ -1,10 +1,28 @@
 int main()˙{
   // grafico
-sf::RenderWindow window((800, 600), "Epidemic evolution");
-std::ifstream infile ("epidemic.cpp");// metti tra virgolette nome del file da cui prendi dati
-if (!infile) { 
-    throw std::runtime_error {"Impossible to open file"}
-}
+sf::RenderWindow window((800, 600), "Epidemic evolution"); //crea finestra grafica
+
+  sf::RectangleShape xAxis (sf::Vector2f (window.getSize().x, 2.f); //crea asse x che ha dimensioni: lungo quanto la lunghezza della finestra e alto due unità
+ xAxis.setPosition(0.f, window.getSize().y/2); // imposta posizione dell'asse x. posizionato all'inizio della finestra e a metà altezza della finestra
+  xAxis.setFillColor (sf::Color::Black); // asse x di colore nero
+
+sf::RectangleShape yAxis (sf::Vector2f(2.f, window.getSize().y));
+  yAxis.setPosition(window.getSize().x /2, 0.f);
+  yAxis.setFillColor(sf::Color::Black);
+
+
+
+
+
+
+window.draw(xAxis);
+window.draw(yAxis);
+
+  window.display();
+  
+
+  
+
 
 std::vector<int> time; // serve?
 std::vector<int> population_state; //oppure devoinserire singolarmente S,I e R???
