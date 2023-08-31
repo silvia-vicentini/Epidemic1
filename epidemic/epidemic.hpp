@@ -1,7 +1,6 @@
 #ifndef EPIDEMIC_HPP  // verifica tutti i const e i &&
 #define EPIDEMIC_HPP
 
-#include <cmath>
 #include <vector>
 
 // bisogna modificare i throw con gli assert
@@ -9,10 +8,12 @@
 // bisogna scrivere i commenti dove necessario
 
 namespace pf {
+
+// number of people in each group in which the population is divided
 struct Population {
-  int S{};
-  int I{};
-  int R{};
+  int S;
+  int I;
+  int R;
 };
 
 class Epidemic {
@@ -21,25 +22,25 @@ class Epidemic {
   double const gamma_;
   std::vector<Population> population_state_;
 
-  Population correct(Population,
-                     int const); 
-
  public:
   Epidemic(double const, double const);
 
+  // to calculate how S, I and R change during a day
   Population solve(Population const, int const);
 
-  Population approx(Population,
-                    int const); 
+  // to make the correct approximation from double to int
+  Population approx(Population, int const);
 
-  std::vector<Population> evolve(
-      Population,
-      int const); 
+  // to calculate how S, I and R change during a lockdown
+  Population lockdown(Population, int const);  // aggiungere alla relazione!
 
-  // void graph(int, std::vector<Population>);
+  /*
+    // to calculate how S, I and R change when people get vaccines
+    Population vaccine(Population, int const, double const);
+  */
 
-  /*std::vector<Population> const &state()
-      const;  // questa funzione restituisce lo stato della popolazione*/
+  // to record the development of the epidemic
+  std::vector<Population> evolve(Population, int const);
 };
 }  // namespace pf
 
