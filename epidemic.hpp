@@ -21,21 +21,20 @@ class Epidemic {
   double const gamma_;
   std::vector<Population> population_state_;
 
-  Population solve(Population const, int const);
+  Population correct(Population,
+                     int const); 
 
  public:
   Epidemic(double const, double const);
 
-  Population approx(Population, int const);  // per fare le approssimazioni
+  Population solve(Population const, int const);
 
-  Population correcting(Population,
-                        int const);  // per approssimare in base alle nostre
-                                     // approssimazioni population_state;
+  Population approx(Population,
+                    int const); 
 
   std::vector<Population> evolve(
-      Population const,
-      int const);  // questa funzione consente di calcolare l'evoluzione
-                   // della popolazione ad un istante di tempo t
+      Population,
+      int const); 
 
   // void graph(int, std::vector<Population>);
 
