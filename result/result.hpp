@@ -3,7 +3,7 @@
 #include <string>
 #include <vector>
 
-#include "../epidemic/epidemic.hpp"
+#include "epidemic/epidemic.hpp"
 
 namespace pf {
 
