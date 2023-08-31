@@ -5,13 +5,18 @@ sf::RenderWindow window((800, 600), "Epidemic evolution"); //crea finestra grafi
   sf::RectangleShape xAxis (sf::Vector2f (window.getSize().x, 2.f); //crea asse x che ha dimensioni: lungo quanto la lunghezza della finestra e alto due unità
  xAxis.setPosition(0.f, window.getSize().y/2); // imposta posizione dell'asse x. posizionato all'inizio della finestra e a metà altezza della finestra
   xAxis.setFillColor (sf::Color::Black); // asse x di colore nero
-sf::Text xAxisLabel ("Tempo", font, 20); // non so a cosa serva quel 20
-  
   
 sf::RectangleShape yAxis (sf::Vector2f(2.f, window.getSize().y));
   yAxis.setPosition(window.getSize().x /2, 0.f);
   yAxis.setFillColor(sf::Color::Black);
 
+sf::Font font;
+  if (!font.loadFromFile("arial.ttf")) { std::cerr << "Impossible to load font" << std::endl;  }
+//questo serve per il font con cui voglio fare scritte, è necessario?, è giusto?
+  sf::Text xAxisName("Time", font, 20);
+  sf::Text yAxisName ("Number of people", font, 20); 
+  xAxisName.setPosition (window.getSize().x -100, window.getSize().y - 40); //non ho la minima idea di dove lo abbia posizionato,controlla!!!
+  yAxisName.setPosition (20,20)
 
 
 
@@ -19,7 +24,8 @@ sf::RectangleShape yAxis (sf::Vector2f(2.f, window.getSize().y));
 
 window.draw(xAxis);
 window.draw(yAxis);
-
+window.draw (xAxisName);
+window.draw (yAxisName);
   window.display();
   
 
