@@ -1,3 +1,7 @@
+#include <SFML/Graphics.hpp>
+#include <iostream>
+#include <vector>
+
 int main()˙{
   // grafico
 sf::RenderWindow window((800, 600), "Epidemic evolution"); //crea finestra grafica
@@ -20,7 +24,8 @@ sf::Font font;
 
   float maxXValue =  //stabilisci quale è il valore max sull'asse delle x
   float maxYValue =  //stabilisci quale è il valore max sull'asse delle y
-  for (float y = 0; y <= maxYValue; y += 20.f) { sf::VertexLine }
+  for (float y = 0; y <= maxYValue; y += 20.f) //il valore 20.f è a caso
+    { sf::Vertex line [] =  sf::Vertex ( sf::Vector2f (graphPosition.x, graphPosition.y + graphSize.y -(y/ maxYvalue)* graphSize.y)  }
 
 
 
