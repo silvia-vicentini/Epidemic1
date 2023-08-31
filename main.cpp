@@ -2,6 +2,7 @@
 #include <iostream>
 #include <vector>
 
+
 int main(){
   // GRAFICO
 sf::RenderWindow window(sf::VideoMode(800, 600), "Epidemic evolution"); //crea finestra grafica
