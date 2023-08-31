@@ -40,12 +40,12 @@ int main() {
       }
       std::cout << "To print che graphic to screen use command [g]\n";
       std::cin >> cmd;
-      if (cmd == 'g') {
+      /*if (cmd == 'g') {
         epidemic.graph(day, population_state_);
       } else {
         std::cout << "To run che program again press one of the commands "
                      "above, otherwise press q\n";
-      }
+      }*/
     }
 
     // lettura parametri da standard input.
@@ -73,13 +73,13 @@ int main() {
       }
       std::cout << "To print che graphic to screen use command [g]\n";
       std::cin >> cmd;
-      if (cmd == 'g') {
+      /*if (cmd == 'g') {
         epidemic.graph(day,
                        population_state_);  // funzione ancora da definire
       } else {
         std::cout << "To run che program again press one of the commands "
                      "above, otherwise press q\n";
-      }
+      }*/
     }
 
     // lettura dei parametri da file dove compaiono nel seguente ordine:
@@ -119,13 +119,14 @@ int main() {
         }
         std::cout << "To print che graphic to screen use command [g]\n";
         std::cin >> cmd;
-        if (cmd == 'g') {
+        /*if (cmd == 'g') {
           epidemic.graph(parameters.day,
                          population_state_);  // funzione ancora da definire
         } else {
           std::cout << "To run che program again press one of the commands "
                        "above, otherwise press q\n";
         }
+      }*/
       }
     }
 
