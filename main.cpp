@@ -25,12 +25,23 @@ sf::Font font;
   float maxXValue =  //stabilisci quale è il valore max sull'asse delle x
   float maxYValue =  //stabilisci quale è il valore max sull'asse delle y
   for (float y = 0; y <= maxYValue; y += 20.f) //il valore 20.f è a caso
-    { sf::Vertex line [] =  sf::Vertex ( sf::Vector2f (graphPosition.x, graphPosition.y + graphSize.y -(y/ maxYvalue)* graphSize.y)  }
+    { sf::Vertex line [] =  { 
+     sf::Vertex (sf::Vector2f (graphPosition.x, graphPosition.y + graphSize.y -(y/ maxYvalue)* graphSize.y), sf::Color::Black ), 
+     sf::Vertex ( sf::Vector2f (graphPosition.x + graphSize.x, graphPosition.y + graphSize.y - (y / maxYValue)* graphSize.y ), sf::Color::Black) 
+    };
+     window.draw(line, 2, sf::Lines);
+    }
+  for (float x = 0; x <= maxXValue; x += 2.f) //il valore 2.f è a caso
+    { sf::Vertex line [] =  { 
+     sf::Vertex (sf::Vector2f (graphPosition.x + (x/ maxXValue) * graphSize.x, graphPosition.y + graphSize.y), sf::Color::Black ), 
+     sf::Vertex ( sf::Vector2f (graphPosition.x + (x/ maxXValue) * graphSize.x, graphPosition.y ), sf::Color::Black) 
+    };
+     window.draw(line, 2, sf::Lines);
+    }
 
 
 
-
-
+  
 window.draw(xAxis);
 window.draw(yAxis);
 window.draw (xAxisName);
