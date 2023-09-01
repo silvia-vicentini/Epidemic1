@@ -3,8 +3,6 @@
 
 #include "result/result.hpp"
 
-namespace pf {
-
 int main() {
   std::cout << "Valid commands: \n"
             << "- read data from command line [l]\n"
@@ -46,4 +44,3 @@ int main() {
     }
   }
 }
-}  // namespace pf
