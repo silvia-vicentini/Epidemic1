@@ -31,13 +31,15 @@ class Epidemic {
   // to make the correct approximation from double to int
   Population approx(Population, int const);
 
+  // to calculate the correct number of S, I and R in a day using the correct
+  // approximation method
+  Population correct(Population, int const);
+
   // to calculate how S, I and R change during a lockdown
   Population lockdown(Population, int const);  // aggiungere alla relazione!
 
-  /*
-    // to calculate how S, I and R change when people get vaccines
-    Population vaccine(Population, int const, double const);
-  */
+  // to calculate how S, I and R change when people get vaccines
+  Population vaccine(Population, int const);
 
   // to record the development of the epidemic
   std::vector<Population> evolve(Population, int const);
