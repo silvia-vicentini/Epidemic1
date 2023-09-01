@@ -24,7 +24,7 @@ void make_cleats(std::vector<Population> population_state_) {
   float maxYValue =
       population_state_[0].S + population_state_[0].I + population_state_[0].R;
 
-  for (float x = 0; x <= maxXValue; x += 2.f)  // il valore 2.f è a caso
+  for (float x = 0; x <= maxXValue; x += 20.f)
   {
     sf::Vertex line[] = {
         sf::Vertex(sf::Vector2f(graphPosition.x + (x / maxXValue) * graphSize.x,
