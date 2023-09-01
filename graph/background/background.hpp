@@ -1,11 +1,11 @@
-#ifndef BACKGROwND_HPP
-#define BACKGROwND_HPP
+#ifndef BACKGROUND_HPP
+#define BACKGROUND_HPP
 
 #include <SFML/Graphics.hpp>
 
 namespace pf {
-// to create the backgrownd
-void draw_backgrownd();
+// to create the background
+void draw_background();
 
 // to set the graph dimensions
 void set_dimensions();
