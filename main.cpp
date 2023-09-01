@@ -67,6 +67,12 @@ sf::Font font;
 sf::VertexArray SusceptibleCurve (sf::LineStrip); // creo le curve
 sf::VertexArray InfectionCurve (sf::LineStrip);
 sf::VertexArray RecoveryCurve (sf::LineStrip);
+for (const auto& data : Population_state_ ) { 
+int x = std::get<0> (data);
+int yS = std::get<1> (data);
+int yI = std::get<2> (data);
+int yR = std::get<3> (data);
+}
 
 
 
