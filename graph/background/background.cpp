@@ -1,9 +1,9 @@
-#include "backgrownd.hpp"
+#include "background.hpp"
 
 namespace pf {
 
-// draw_backgrownd definition
-void draw_backgrownd() {
+// draw_background definition
+void draw_background() {
   sf::RenderWindow window(sf::VideoMode(800, 600), "Epidemic evolution");
 }
 
