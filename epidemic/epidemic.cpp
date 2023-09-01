@@ -53,6 +53,11 @@ Population Epidemic::approx(Population population_state, int const N) {
   return Population{population_state.S, population_state.I, population_state.R};
 }
 
+// definition of correct function
+Population Epidemic::correct(Population population_state, int const N) {
+  return Population{approx(solve(population_state, N), N)};
+}
+
 // definition of lockdown function
 Population Epidemic::lockdown(Population prev_state, int const N) {
   double const beta{Epidemic::beta_};
@@ -63,49 +68,50 @@ Population Epidemic::lockdown(Population prev_state, int const N) {
   return Population{prev_state.S, I_i, R_i};
 }
 
-/*
 // se si fanno dei vaccini parte dei sani entra nei R perché diventano immuni
-Population Epidemic::vaccine(Population prev_state, int const N,
-                             double const v) {
-  if (v < 0.) {
-    throw std::runtime_error{"Vaxination parameter v must be > 0"};
-  } else if (v > 0.1) {
-    throw std::runtime_error{
-        "Not possible to vaccine more than 10% of the population per day"};
-  } else {
-    double const beta{Epidemic::beta_};
-    double const gamma{Epidemic::gamma_};
-    int R_i =
-        std::round(prev_state.R + gamma * prev_state.I + v * prev_state.S);
-    int I_i = std::round(prev_state.I + beta * prev_state.S * prev_state.I / N -
-                         gamma * prev_state.I);
-    int S_i = std::round(prev_state.S - beta * prev_state.S * prev_state.I / N -
-                         v * prev_state.S);
+Population Epidemic::vaccine(Population prev_state, int const N) {
+  double const beta{Epidemic::beta_};
+  double const gamma{Epidemic::gamma_};
+  int S_i = std::round(prev_state.S - beta * prev_state.S * prev_state.I / N -
+                       0.05 * prev_state.S);
+  int R_i =
+      std::round(prev_state.R + gamma * prev_state.I + 0.05 * prev_state.S);
+  int I_i = N - prev_state.S - R_i;
 
-    return Population{prev_state.S, I_i, R_i};
-  }
+  return Population{prev_state.S, I_i, R_i};
 }
-*/
 
 // definition of evolve function
 std::vector<Population> Epidemic::evolve(Population initial_population,
-                                         int const time) {
+                                         int const days) {
   population_state_.push_back(initial_population);
 
   int const N =
       initial_population.S + initial_population.I + initial_population.R;
 
-  for (int i{0}; i < time;) {
-    if (population_state_[i].I < 0.6 * N) {
-      auto next_state = approx(solve(population_state_[i], N), N);
-      population_state_.push_back(next_state);
-      ++i;
-    } else {
-      for (int a{0}; a < 14; ++a) {
-        auto next_state = approx(lockdown(population_state_[i], N), N);
+  for (int i{0}; i <= days;) {
+    if (days < 60) {
+      if (population_state_[i].I < 0.6 * N) {
+        auto next_state = correct(population_state_[i], N);
         population_state_.push_back(next_state);
+        ++i;
+      } else {
+        if (days - i < 14) {
+          for (int a{0}; a < days - i; ++a) {
+            auto next_state = lockdown(population_state_[i], N);
+            population_state_.push_back(next_state);
+          }
+        } else {
+          for (int a{0}; a < 14; ++a) {
+            auto next_state = lockdown(population_state_[i], N);
+            population_state_.push_back(next_state);
+          }
+          i += 14;
+        }
       }
-      i += 14;
+    } else {
+      auto next_state = vaccine(population_state_[i], N);
+      population_state_.push_back(next_state);
     }
   }
   return Epidemic::population_state_;
