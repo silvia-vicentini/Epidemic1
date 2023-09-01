@@ -67,11 +67,11 @@ sf::Font font;
 sf::VertexArray SusceptibleCurve (sf::LineStrip); // creo le curve
 sf::VertexArray InfectionCurve (sf::LineStrip);
 sf::VertexArray RecoveryCurve (sf::LineStrip);
-for (const auto& data : Population_state_ ) { 
-int x = std::get<0> (data);
-int yS = std::get<1> (data);
-int yI = std::get<2> (data);
-int yR = std::get<3> (data);
+for (int i{0}; i <= day; ++i) { 
+int x = i;
+int yS = population_state_[i].S;
+int yI = population_state_[i].I;
+int yR = population_state_[i].R;
 SusceptibleCurve.append (sf::Vertex (sf::Vector2f(graphPosition.x +(x / maxXValue) * graphSize.x, graphPosition.y + graphSize.y -(yS /maxYValue) * graphSize.y), sf::Color::Blue);
 InfectedCurve.append (sf::Vertex (sf::Vector2f(graphPosition.x +(x / maxXValue) * graphSize.x, graphPosition.y + graphSize.y -(yI /maxYValue) * graphSize.y), sf::Color::Red);
 RecoveryCurve.append (sf::Vertex (sf::Vector2f(graphPosition.x +(x / maxXValue) * graphSize.x, graphPosition.y + graphSize.y -(yR /maxYValue) * graphSize.y), sf::Color::Green);
