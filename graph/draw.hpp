@@ -3,10 +3,11 @@
 
 #include <SFML/Graphics.hpp>
 #include <vector>
+#include "../epidemic/epidemic.hpp"˙
 
-#include "../axis/axis.hpp"
-#include "../background/background.hpp"
-#include "../curves/curves.hpp"
+#include "axis/axis.hpp"
+#include "background/background.hpp"
+#include "curves/curves.hpp"
 
 namespace pf {
 
