@@ -1,6 +1,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 #include <vector>
+#include "epidemic.hpp"
 
 
 int main(){
@@ -18,7 +19,7 @@ sf::RectangleShape yAxis (sf::Vector2f(2.f, window.getSize().y));
 sf::Font font;
   if (!font.loadFromFile("arial.ttf")) { std::cerr << "Impossible to load font" << std::endl;  }
 //questo serve per il font con cui voglio fare scritte, è necessario?, è giusto?
-  sf::Text xAxisName("Time", font, 20);
+  sf::Text xAxisName("Days", font, 20);
   sf::Text yAxisName ("Number of people", font, 20); 
   xAxisName.setPosition (window.getSize().x -100, window.getSize().y - 40); //non ho la minima idea di dove lo abbia posizionato,controlla!!!
   yAxisName.setPosition (20,20) //non ho la minima idea di dove lo abbia posizionato,controlla!!!
