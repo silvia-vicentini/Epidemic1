@@ -20,19 +20,18 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-o
 
 # richiedi SFML
 # le dipendenze vengono identificate automaticamente
-#find_package(SFML 2.6 COMPONENTS graphics REQUIRED)
-#/usr/local/Cellar/sfml/2.6.0
+find_package(SFML 2.6 COMPONENTS graphics REQUIRED)
 
 add_executable(epidemic main.cpp result/result.cpp epidemic/epidemic.cpp)
-#target_link_libraries(epidemic PRIVATE sfml-graphics)
+target_link_libraries(epidemic PRIVATE sfml-graphics)
 
 # se il testing e' abilitato...
 #   per disabilitare il testing, passare -DBUILD_TESTING=OFF a cmake durante la fase di configurazione
 if (BUILD_TESTING)
 
   # aggiungi l'eseguibile epidemic.t
-  add_executable(epidemic.t epidemic/epidemic.test.cpp epidemic/epidemic.cpp)
-  #target_link_libraries(epidemic.t PRIVATE sfml-graphics)
+  add_executable(epidemic.t epidemic/epidemic.test.cpp epidemic/epidemic.cpp graph/draw.cpp graph/curves/curves.cpp graph/axis/axis.cpp graph/background/background.cpp result/result.cpp)
+  target_link_libraries(epidemic.t PRIVATE sfml-graphics)
    add_test(NAME epidemic.t COMMAND epidemic.t)
 
 endif()
