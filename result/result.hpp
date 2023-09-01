@@ -13,6 +13,9 @@ void output(std::vector<Population>){};
 // to print the graph
 void outgraph(std::vector<Population>);
 
+// to print on file the results
+void outfile(std::vector<Population>);
+
 // to run the program using variables saved on command line
 void command_line();
 
