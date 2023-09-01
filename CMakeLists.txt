@@ -22,7 +22,7 @@ string(APPEND CMAKE_EXE_LINKER_FLAGS_DEBUG " -fsanitize=address,undefined -fno-o
 # le dipendenze vengono identificate automaticamente
 find_package(SFML 2.6 COMPONENTS graphics REQUIRED)
 
-add_executable(epidemic main.cpp result/result.cpp epidemic/epidemic.cpp)
+add_executable(epidemic main.cpp result/result.cpp epidemic/epidemic.cpp graph/draw.cpp graph/curves/curves.cpp graph/axis/axis.cpp graph/background/background.cpp)
 target_link_libraries(epidemic PRIVATE sfml-graphics)
 
 # se il testing e' abilitato...
