@@ -8,7 +8,10 @@
 namespace pf {
 
 // to print on screen the variables S I R
-void output(std::vector<Population>, int){};
+void output(std::vector<Population>){};
+
+// to print the graph
+void outgraph(std::vector<Population>);
 
 // to run the program using variables saved on command line
 void command_line();
@@ -16,8 +19,8 @@ void command_line();
 // to run the program using variables saved on command line
 void standard_input();
 
-// to run the program using variables saved on a file in the order: beta, gamma,
-// S, I, R, day.
+// to run the program using variables saved on a file in the order: beta,
+// gamma, S, I, R, days.
 void infile(std::string);
 
 }  // namespace pf
