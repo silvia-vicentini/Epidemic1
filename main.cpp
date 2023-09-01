@@ -72,10 +72,11 @@ int x = std::get<0> (data);
 int yS = std::get<1> (data);
 int yI = std::get<2> (data);
 int yR = std::get<3> (data);
-}
-
-
-
+SusceptibleCurve.aapend (sf::Vertex (sf::Vector2f(graphPosition.x +(x / maxXValue) * graphSize.x, graphPosition.y + graphSize.y -(yS /maxYValue) * graphSize.y), sf::Color::Blue);
+InfectedCurve.aapend (sf::Vertex (sf::Vector2f(graphPosition.x +(x / maxXValue) * graphSize.x, graphPosition.y + graphSize.y -(yI /maxYValue) * graphSize.y), sf::Color::Red);
+RecoveryCurve.aapend (sf::Vertex (sf::Vector2f(graphPosition.x +(x / maxXValue) * graphSize.x, graphPosition.y + graphSize.y -(yR /maxYValue) * graphSize.y), sf::Color::Green);
+//crea un oggetto sf::Vertex che rappresenta un punto. con sf::Vector calcolo le cordinate del punto (dove x e y sono quelli correnti nel ciclo)
+ }
   
   while (window.isOpen())
 {
@@ -92,6 +93,9 @@ window.draw (xAxisName);
 window.draw (yAxisName);
 for (const sf::Text& tick : xTicks) { window.draw(tick); } //ciclo range-based . Serve per disegnare l'oggetto tick (corrente) sulla finestra. Tutte le etichette vengono disegnate una dopo l'altra seguendo l'ordine in cui sono nel vettore xTicks.
 for (const sf::Text& tick : yTicks) { window.draw(tick); }
+window.draw(SusceptibleCurve);
+window.draw (InfectedCurve);
+window.draw (RecoveryCurve);
   window.display();
   }
   }
