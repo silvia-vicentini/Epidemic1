@@ -17,7 +17,7 @@ sf::RectangleShape yAxis (sf::Vector2f(2.f, window.getSize().y));
   yAxis.setFillColor(sf::Color::Black);
 
 sf::Font font;
-  if (!font.loadFromFile("arial.ttf")) { std::cerr << "Impossible to load font" << std::endl;  }
+  // if (!font.loadFromFile("arial.ttf")) { std::cerr << "Impossible to load font" << std::endl;  }
 //questo serve per il font con cui voglio fare scritte, è necessario?, è giusto?
   sf::Text xAxisName("Days", font, 20);
   sf::Text yAxisName ("Number of people", font, 20); 
