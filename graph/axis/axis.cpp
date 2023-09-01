@@ -17,7 +17,8 @@ void make_y_axis() {
   yAxis.setPosition(window.getSize().x / 2, 0.f);
   yAxis.setFillColor(sf::Color::Black);
 }
-
+/////////////////////non sarebbe più furbo fare le tacchette suddividendo l'asse in n parti ugu
+ali, a prescindere da quanto lungo esso sia?
 // make_cleats definition
 void make_cleats(std::vector<Population> population_state_) {
   float maxXValue = population_state_.size();
