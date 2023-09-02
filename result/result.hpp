@@ -4,6 +4,7 @@
 #include <vector>
 
 #include "../epidemic/epidemic.hpp"
+#include "../graph/draw.hpp"
 
 namespace pf {
 
