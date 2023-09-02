@@ -6,8 +6,6 @@
 #include <string>
 #include <vector>
 
-#include "../graph/graph.hpp"
-
 namespace pf {
 
 // definition of output function
