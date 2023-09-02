@@ -3,7 +3,7 @@
 
 #include <SFML/Graphics.hpp>
 
-#include "../epidemic/epidemic.hpp"
+#include "../../epidemic/epidemic.hpp"
 
 namespace pf {
 
