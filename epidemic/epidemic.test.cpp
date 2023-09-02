@@ -1,7 +1,7 @@
 #define DOCTEST_CONFIG_IMPLEMENT_WITH_MAIN
 #include "epidemic.hpp"
 
-#include "doctest.h"
+#include "../doctest.h"
 
 //mancano i test su vaccine!!
 
