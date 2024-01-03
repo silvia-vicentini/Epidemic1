@@ -1,45 +1,125 @@
-#ifndef EPIDEMIC_HPP  // verifica tutti i const e i &&
+#ifndef EPIDEMIC_HPP
 #define EPIDEMIC_HPP
-
-#include <cmath>  //R0 del testo è diverso rispetto al rapporto beta/gamma? perchè altrimenti i parametri sono meno di 5
+#include <cassert>
+#include <cmath>
+#include <iomanip>
+#include <iostream>
 #include <vector>
 
-struct Population {  // è giusta questa divisione tra struct e class o
-                     // vanno scambiati? Devo inserire un'altra class?
-  int S{};
-  int I{};
-  int R{};
+//@@@@@@@@@@@@@@ chiedi a cate di leggerti le scritte e correggerti l'inglese!!!
+
+namespace pf {
+
+template <typename type>
+struct Population {
+  type S;
+  type I;
+  type R;
 };
 
 class Epidemic {
  private:
-  double beta_;  // devono essere const? devo usare & o * ?
-  double gamma_;
-  std::vector<Population> population_state_;
+  ////////////////////////////////////////////////////////////////////////////////
+  // Epidemic parameter beta expresses the infection rate
+  ////////////////////////////////////////////////////////////////////////////////
+  const double beta_;
 
-  int solve_S(Population &, double const &, double const &,
-                     int const) const;
-  int solve_I(Population &, double const &, double const &,
-                     int const) const;
-  int solve_R(Population &, double const &, double const &,
-                     int const) const;
+  ////////////////////////////////////////////////////////////////////////////////
+  // Epidemic parameter gamma expresses the recovery rate
+  ////////////////////////////////////////////////////////////////////////////////
+  const double gamma_;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Initial state of population expressed in double
+  ////////////////////////////////////////////////////////////////////////////////
+  const Population<double> initial_population_;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Number of days the evolution will last
+  ////////////////////////////////////////////////////////////////////////////////
+  const int T_;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Total number of people in the population
+  ////////////////////////////////////////////////////////////////////////////////
+  const int N_;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Storage of each state of the population per day of type double
+  ////////////////////////////////////////////////////////////////////////////////
+  std::vector<Population<double> > simulation_double_;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Percentage of infected people beyond whith the lockdown occurs
+  ////////////////////////////////////////////////////////////////////////////////
+  const double critic_level_;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // Duration of the lockdown
+  ////////////////////////////////////////////////////////////////////////////////
+  const int lockdown_duration_;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // A function that calculates the value of the parameters S I and R which
+  // describe the state of the population in the following day of the epidemic
+  // from the values of S I and R from the previous day. The calculation is
+  // based on the discretization of the equations of the SIR model. The
+  // calculated values are of type double to garantee a greater calculation
+  // precision.
+  ////////////////////////////////////////////////////////////////////////////////
+  Population<double> calculate(const Population<double> &) const;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // A function that calculates the value of the parameters S I and R which
+  // describe the state of the population in the following day when the
+  // population is in lockdown. In this case the number of susceptible people S
+  // remains the same, the number of recovered people R follows the
+  // discretization of the equations of the SIR model and the number of
+  // infectious people I reduces such in a way that the number of people in
+  // total N_ remains constant. The calculated values are of type double to
+  // garantee a greater calculation precision.
+  ////////////////////////////////////////////////////////////////////////////////
+  Population<double> lockdown(Population<double> const &) const;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // A function that changes the type of S I and R of a particular day of the
+  // epidemic from double to int.
+  ////////////////////////////////////////////////////////////////////////////////
+  Population<int> round(Population<double> const &) const;
+
+  ////////////////////////////////////////////////////////////////////////////////
+  // A function that garantees that the total number of people tot in the
+  // population remains const equal to N_. In case tot is greather than N_ the
+  // number of recovered people R is reduced. In case tot is lower than N_ the
+  // number of infectious people I is increased. In this way the number of
+  // infectious can't be  underestimate.
+  ////////////////////////////////////////////////////////////////////////////////
+  Population<int> keepTotalConstant(Population<int> const &) const;
 
  public:
-  Epidemic(double const &,
-           double const &);  // è giusto const qui? devo mettere anche la
-                             // popolazione iniziale tra le variabili?
+  // constructor
+  Epidemic(const double, const double, Population<double> const &, const int);
 
-  std::size_t size() const;  // non so se serva tato che deve essere uguale a t
+  ////////////////////////////////////////////////////////////////////////////////
+  // A function that changes all states of the population stored in
+  // simulation_double_ from double to int.
+  ////////////////////////////////////////////////////////////////////////////////
+  std::vector<Population<int> > evolution() const;
 
-  void push_back(Population &);  // per inserire ogni step
-                                 // dell'evoluzione della pandemia
+  ////////////////////////////////////////////////////////////////////////////////
+  // Getter methods
+  ////////////////////////////////////////////////////////////////////////////////
+  std::vector<Population<double> > get_simulation_double() const;
 
-  void evolve(Population &, double const &, double const &,
-              int const);  // questa funzione consente di calcolare l'evoluzione
-                           // della popolazione ad un istante di tempo t
+  int getN() const;
+  int getT() const;
 
-  std::vector<Population> const &state()
-      const;  // questa funzione restituisce lo stato della popolazione
+  ////////////////////////////////////////////////////////////////////////////////
+  // A function that prints in output the result expressed in int of the
+  // development of the epidemic
+  ////////////////////////////////////////////////////////////////////////////////
+  void print_results() const;
 };
+}  // namespace pf
 
 #endif
